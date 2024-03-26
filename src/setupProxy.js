@@ -12,7 +12,7 @@ module.exports = function (app) {
     app.use(
         '/token',
         createProxyMiddleware({
-            target: 'http://webhook.site/',
+            target: 'https://webhook.site/',
             changeOrigin: true,
         })
     );
