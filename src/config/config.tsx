@@ -1,3 +1,6 @@
+import React from 'react';
+import { Tooltip } from '@mui/material';
+
 /* Configure App key, Partner ID and Partner Secret */
 export const PARTNERID = process.env.REACT_APP_PARTNERID ?? '';
 export const PARTNERSECRET = process.env.REACT_APP_SECRET ?? '';
@@ -55,16 +58,40 @@ export const STEPS = [
     {
         label: 'Attach a bank account to customer',
         description: (
-            <div>
-                Now that you have created a customer, the next step is to
-                generate a Connect URL. That is needed to start a Connect
-                session and grant Mastercard Open Banking access to their
-                accounts and financial data.
-            </div>
+            <React.Fragment>
+                <div>
+                    Now that you have created a customer, the next step is to
+                    generate a Connect URL. That is needed to start a Connect
+                    session and grant Mastercard Open Banking access to their
+                    accounts and financial data.
+                </div>
+                <br />
+                <div>
+                    The Connect application allows customers to connect to their
+                    financial institutions and give consent to their savings and
+                    other accounts that they consent to share. This allows third
+                    parties to access financial data from the consumer’s
+                    consented accounts.
+                    <Tooltip title='Consent is when a customer voluntarily gives permission to the data recipient to access and use the customer’s financial data for a limited period of time defined by the consent.'>
+                        <span>
+                            {' '}
+                            See{' '}
+                            <a
+                                rel='noreferrer'
+                                href='https://developer.mastercard.com/open-banking-au/documentation/consent/'
+                                target='_blank'
+                            >
+                                <b>Consent</b>
+                            </a>
+                            .
+                        </span>
+                    </Tooltip>
+                </div>
+            </React.Fragment>
         ),
         panel: 'panel1',
         documentationLink:
-            'https://developer.mastercard.com/open-banking-au/documentation/',
+            'https://developer.mastercard.com/open-banking-au/documentation/connect/',
     },
     {
         label: 'Pull account information',
@@ -74,13 +101,21 @@ export const STEPS = [
                     We are now interested in retrieving some of the most recent
                     information about the accounts. For that, we call the{' '}
                     <b className='text-[14px]'>Refresh Customer Accounts </b>{' '}
+                    endpoint followed by{' '}
+                    <b className='text-[14px]'>Get Customer Accounts </b>{' '}
                     endpoint.
+                </div>
+                <br />
+                <div>
+                    Access to any customer account data requires the Consent
+                    Receipt Id the customer has given when linking these
+                    accounts (obtained from previous steps).
                 </div>
             </div>
         ),
         panel: 'panel2',
         documentationLink:
-            'https://developer.mastercard.com/open-banking-au/documentation/quick-start-guide/#3-fetch-some-data',
+            'https://developer.mastercard.com/open-banking-au/documentation/api-reference/#GetCustomerAccounts',
     },
 ];
 
