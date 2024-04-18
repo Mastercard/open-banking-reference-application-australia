@@ -3,9 +3,10 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import { Box, Link, Stack, Typography } from '@mui/material';
 import ExternalIcon from '../../utils/external-icon';
+import { PARTNERID, PARTNERSECRET, APP_KEY } from '../../config/config';
 
 export default function Modal() {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(!!(PARTNERID && PARTNERSECRET && APP_KEY));
 
     const handleClose = () => {
         setOpen(false);

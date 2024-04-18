@@ -103,7 +103,9 @@ export default function ConnectForm() {
             // Activate customer and reset form
             if (userName && (token || appToken)) {
                 await activateCustomer(userName, token);
-                const subUuid = await subscribeForConsentNotification(token);
+                const subUuid = await subscribeForConsentNotification(
+                    token || appToken
+                );
                 setSubscriptionUuid(subUuid);
                 resetForm();
             }
