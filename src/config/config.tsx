@@ -81,9 +81,7 @@ export const STEPS = [
                                 href='https://developer.mastercard.com/open-banking-au/documentation/consent/'
                                 target='_blank'
                             >
-                                <b>Consent</b>
-                            </a>
-                            .
+                                <b>Consent</b></a>.
                         </span>
                     </Tooltip>
                 </div>
