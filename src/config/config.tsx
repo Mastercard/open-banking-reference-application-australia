@@ -15,6 +15,8 @@ export const URL = {
     achUrl: '/aggregation/v3/customers/<customerId>/accounts/<accountId>/details',
     getSubscriptions: '/notifications/webhooks/subscriptions',
     createWebhookEndPoint: '/token',
+    updateSubscriptionUrl:
+    '/notifications/webhooks/subscriptions/<subscriptionUuid>/url',
     subscibeForConsentNotifications: '/notifications/webhooks/subscriptions',
     retrieveConsent: 'token/<subscriptionUuid>/requests?sorting=newest&page=1',
 };

@@ -62,7 +62,7 @@ export default function Header() {
                         </Typography>
                     </Box>
                     <a
-                        href='https://github.com/Mastercard/open-banking-reference-application'
+                        href='https://github.com/Mastercard/open-banking-reference-application-australia/'
                         target='_blank'
                         rel='noreferrer'
                         style={{ marginTop: '10px' }}
