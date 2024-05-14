@@ -11,7 +11,12 @@ export const subscribeForConsentNotification = async (
 ): Promise<string> => {
     const activeSubscription = await getActiveSubsriptions(token);
     if (activeSubscription) {
-        return getSubscriptionUuid(activeSubscription);
+        const subscriptionUuid = getSubscriptionUuid(activeSubscription);
+        return getValidSubscriptionUuid(
+            activeSubscription,
+            subscriptionUuid,
+            token
+        );
     }
     const webHookEndpoint = await createWebhookEndPoint();
     if (webHookEndpoint) {
@@ -19,6 +24,38 @@ export const subscribeForConsentNotification = async (
         return webHookEndpoint;
     } else {
         throw new Error('Failed to create webhook endpoint');
+    }
+};
+
+/**
+ *
+ * @param subscription subscription for consent notification
+ * @param subscriptionUuid Unique Uuid for active subscription
+ * @param token App token for request authorization
+ * @returns get valid subscriptionUuid
+ */
+const getValidSubscriptionUuid = async (
+    subscription: any,
+    subscriptionUuid: string,
+    token = ''
+): Promise<string> => {
+    const result = await fetchWebhookToken(subscriptionUuid);
+    if (!result?.success && result?.error) {
+        const webHookEndpoint = await createWebhookEndPoint();
+        const requestHeaders = generateFetchHeaders('PUT', token, 'WEBHOOK');
+        const body = JSON.stringify({
+            url: `https://webhook.site/${webHookEndpoint}`,
+        });
+        await fetch(
+            URL.updateSubscriptionUrl.replace(
+                '<subscriptionUuid>',
+                subscription.id
+            ),
+            { ...requestHeaders, body }
+        );
+        return webHookEndpoint;
+    } else {
+        return subscriptionUuid;
     }
 };
 
@@ -33,13 +70,7 @@ export const retrieveConsent = async (
     customerId: string
 ): Promise<any> => {
     try {
-        const headers = new Headers();
-        headers.append('Accept', 'application/json');
-        const response = await fetch(
-            URL.retrieveConsent.replace('<subscriptionUuid>', subscriptionUuid),
-            { headers, method: 'GET' }
-        );
-        const result = await response.json();
+        const result = await fetchWebhookToken(subscriptionUuid);
         if (result?.data) {
             const record = result.data.find(
                 (request: any) =>
@@ -52,6 +83,21 @@ export const retrieveConsent = async (
     } catch (error) {
         throw new Error('Failed to retrieve consent receipt id');
     }
+};
+
+/**
+ *
+ * @param subscriptionUuid Unique Uuid for active subscription
+ * @returns fetch Webhook token
+ */
+const fetchWebhookToken = async (subscriptionUuid: string): Promise<any> => {
+    const headers = new Headers();
+    headers.append('Accept', 'application/json');
+    const response = await fetch(
+        URL.retrieveConsent.replace('<subscriptionUuid>', subscriptionUuid),
+        { headers, method: 'GET' }
+    );
+    return response.json();
 };
 
 /**
