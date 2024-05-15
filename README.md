@@ -17,12 +17,13 @@
   - [Test](#test)
 - [Demo](#demo)
     1. [Generate your credentials](#1-generate-your-credentials)
-    2. [Add credentials in the .env file](#2-add-credentials-in-the-env-file)
+    2. [Add credentials to the .env file](#2-add-credentials-to-the-env-file)
     3. [Run application](#3-run-application)
     4. [Create your first customer](#4-create-your-first-customer)
     5. [Add a bank account to customer](#5-add-a-bank-account-to-customer)
     6. [Pull account information](#6-pull-account-information)
 - [Hosting Reference App](#hosting-reference-app)
+- [Contact Us](#contact-us)
 
 ## Overview
 
@@ -40,7 +41,7 @@ The Reference App includes a launch of [Connect](https://developer.mastercard.co
 ### References
 
 -   [Test profiles](https://developer.mastercard.com/open-banking-au/documentation/test-the-apis/)
--   [API Documentation](https://developer.mastercard.com/open-banking-au/documentation/api-reference/)
+-   [API Reference](https://developer.mastercard.com/open-banking-au/documentation/api-reference/)
 -   [Connect SDK](https://developer.mastercard.com/open-banking-au/documentation/connect/integrating-with-connect/)
 
 ## Set up
