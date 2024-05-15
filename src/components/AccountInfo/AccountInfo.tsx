@@ -52,7 +52,7 @@ export default function AccountInfo({ accountData }: any) {
                         onChange={handleChangeAccount}
                         className='w-[320px] h-10'
                     >
-                        {/* Map through accountData to display each connected account */}
+                        {/* Map through account data to display each connected account */}
                         {accountData.map((acc: any) => (
                             <MenuItem
                                 value={`${acc.accountNickname}-${acc.accountNumberDisplay}`}
