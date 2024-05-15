@@ -105,7 +105,7 @@ export default function AccountInfo({ accountData }: any) {
                                 fontWeight='bold'
                                 className='account-info__label'
                             >
-                                binNumber :
+                                bsbNumber :
                             </Typography>
                             <Typography
                                 className='text-gray-700'
