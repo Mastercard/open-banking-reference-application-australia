@@ -94,7 +94,7 @@ export default function AccountInfo({ accountData }: any) {
                             </a>
                         </Stack>
                     </Grid>
-                    {/* Display routing number and real account number */}
+                    {/* Display bsb number and account number */}
                     <Grid item xs={12} className='mt-2 !ml-20 !mb-4'>
                         <Typography variant='subtitle1'>{ACHTEXT}</Typography>
                     </Grid>
