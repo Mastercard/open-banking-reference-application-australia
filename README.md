@@ -26,15 +26,16 @@
 
 ## Overview
 
-The Open Banking Reference App allows you to explore [Mastercard's Open Banking Service (MOBS) For Australia](https://developer.mastercard.com/open-banking-au/documentation/) and how to incorporate it into your product. This application will allow you to:
+The Open Banking Reference App allows you to explore [Mastercard's Open Banking Service (MOBS) For Australia](https://developer.mastercard.com/open-banking-au/documentation/) to incorporate it into your product. This application allows you to:
 * Create test customers
 * Obtain consent to access test accounts data
-* Retrieve the data from the shared accounts.
+* Retrieve the data from the shared accounts
 
-> Please note that applications accessing the Mastercard Open Banking APIs must be hosted within Australia.
+> **IMPORTANT**: Please note that applications accessing the Mastercard Open Banking APIs must be hosted within Australia.
 
 ### Connect and Consent
-The Reference App includes the launch of [Connect](https://developer.mastercard.com/open-banking-au/documentation/connect/) - a MOBS product which facilitates the collection of consent from the end user (customer) to access their financial data. [Consent](https://developer.mastercard.com/open-banking-au/documentation/consent/) is required by CDR regulation in Australia to get access to the consumer’s financial data. Integrating Connect with your product will streamline the process of obtaining consent while following the compliance rules. After consent is given, the Reference App shows how the consent receipt ID can be fetched in order to make further calls to FIs.
+The Reference App includes a launch of [Connect](https://developer.mastercard.com/open-banking-au/documentation/connect/) - a MOBS product which facilitates the collection of consent from an end user (customer) to access their financial data. 
+[Consent](https://developer.mastercard.com/open-banking-au/documentation/consent/) is required by CDR regulation in Australia to get access to the consumer’s financial data. Integrating Connect with your product will streamline the process of obtaining consent while following the compliance rules. After consent is given, the Reference App shows how the consent receipt ID can be fetched in order to make further calls to FIs.
 
 ### References
 
@@ -54,7 +55,7 @@ However, It is recommended that you use one of NodeJS's LTS releases or one of t
 ### Installation
 
 Before using the Reference App, you will need to set up a project in the local machine.
-The following commands will help you to get the latest code and install the required dependencies on your machine.
+The following commands will help you to get the latest code and install the required dependencies on your machine:
 
 ```shell
 git clone https://github.com/Mastercard/open-banking-reference-application-australia.git
@@ -66,7 +67,7 @@ npm i
 
 ### Test
 
-You can run the following command to execute the test cases against the latest changes in the Reference App.
+You can run the following command to execute the test cases against the latest version of the Reference App:
 
 ```shell
 npm run test
@@ -88,34 +89,37 @@ For more details see [Onboarding](https://developer.mastercard.com/open-banking-
 
 ### 2. Add credentials to the .env file
 
-Open Banking Reference App needs Sandbox API credentials added in the .env file to make the API calls.
+Open Banking Reference App needs Sandbox API credentials added in the `.env` file to make the API calls:
 
--   Create the `.env` file.
+1. Create the `.env` file.
     ```shell
      cp .env.template .env
     ```
--   Update the `.env` file with your Sandbox API credentials generated in step 1.
+2. Update the `.env` file with your Sandbox API credentials generated in step 1.
 
 ### 3. Run application
 
-Execute the following command to start the application:
+Execute the following command to start the Reference App:
 
 ```shell
 npm start
 ```
-As the application is launched in a browser, it prompts either to proceed with demo or GitHub. Select **View Demo**.
-This will redirect you to first step of the user flow.
+When the application is launched in a browser, it prompts either to proceed with demo or go to GitHub. Select **View Demo**.
+This will redirect you to the first step of the user flow.
+
 ![landing page](docs/landing-page.png)
 
 ### 4. Create your first customer
-To access any financial data, first you need to create a customer. In the prompted dialog provide a unique Customer ID. This identifier will be used by MOBS to request financial data of the customer via API calls.
+To access any financial data, first you need to create a customer. In the prompted screen provide a unique Customer ID. This identifier will be used by MOBS to request financial data of the customer via API calls.
 To proceed further, select **Next**.
+
 ![create customer page](docs/create-customer.png)
 
 ### 5. Add a bank account to customer
 
 Now that you have a **Customer ID**, the next step is to add a bank account. The prompted screen lists a name of the Financial Institution and credentials to use during Connect flow.
 To start, select **Connect Bank Account**:
+
 ![add bank account page](docs/add-bank-account.png)
 
 This flow is a simulation of what a customer will see when consenting to share their financial data with you. 
@@ -126,29 +130,29 @@ In Connect flow:
 4. Type profile_4100 and profile_4100 when asked for a username and password.
 5. Select all accounts, and then click Submit/Continue.
 6. Click **Submit** to receive the customer’s consent.
+
 ![connect flow finbank](docs/account-consent-workflow.png)
 
 When the consent to access accounts is successfully obtained and Connect is closed, 
 the Reference App is now ready to access the consented accounts.
 
 ### 6. Pull account information
-At this point having customer ID and consent receipt ID allows you to retrieve the financial data from consented accounts:
+At this point having customer ID and consent receipt ID allows you to retrieve the financial data from consented accounts. The Reference App shows examples of how to retrieve:
 1. Account's Money Transfer details
-2. Available balance.
+2. Available balance
+
 ![account information page](docs/account-information.png)
 
 
 ## Hosting Reference App
 
-To host the Reference App on your server, run the following command to create the application build.
+To host the Reference App on your server, run the following command to create the application build:
 
 ```
 npm run build
 ```
 
-Refer to the below code snippet for creating an [express](https://www.npmjs.com/package/express) application.
-
-Note, that to handling proxy requests to MOBS APIs, we are using [http-proxy-middleware](https://www.npmjs.com/package/http-proxy-middleware). Alternatively, you can set up your proxy server for managing CORS (cross-origin-resource-sharing).
+Refer to the below code snippet for creating an [express](https://www.npmjs.com/package/express) application. Note, that to handling proxy requests to MOBS APIs, we are using [http-proxy-middleware](https://www.npmjs.com/package/http-proxy-middleware). Alternatively, you can set up your proxy server for managing CORS (cross-origin-resource-sharing).
 
 ```
 const express = require('express');
