@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import ExternalIcon from '../../utils/external-icon';
 import { useState } from 'react';
-import { ACHTEXT, AVAILBTEXT } from '../../config/config';
+import { TEXTS, LINKS } from '../../config/config';
 export default function AccountInfo({ accountData }: any) {
     // State to manage the selected account
     const [account, setAccount] = useState(accountData[0]);
@@ -34,17 +34,14 @@ export default function AccountInfo({ accountData }: any) {
                 {/* Display the number of connected accounts */}
                 <Stack direction='column' spacing={1}>
                     <Typography variant='subtitle1'>
-                        You’ve successfully connected{' '}
+                        {TEXTS.accountInfo.accountList + ' '}
                         <span className='text-gray-700'>
-                            {accountData.length} accounts.
+                            {accountData.length} accounts. Connected accounts:
                         </span>
                     </Typography>
                 </Stack>
                 {/* Dropdown to select connected accounts */}
                 <Stack direction='column' spacing={1}>
-                    <Typography className='text-gray-700'>
-                        Connected accounts:
-                    </Typography>
                     <Select
                         labelId='account-select-label'
                         id='account-select'
@@ -80,10 +77,10 @@ export default function AccountInfo({ accountData }: any) {
                                 align='center'
                                 className='text-gray-700'
                             >
-                                Money Transfer Details
+                                {TEXTS.accountInfo.moneyTransferDetails}
                             </Typography>
                             <a
-                                href='https://developer.mastercard.com/open-banking-au/documentation/api-reference/?view=api#GetMoneyTransferDetails'
+                                href={LINKS.accountInfo.moneyTransferDetails}
                                 target='_blank'
                                 rel='noreferrer'
                             >
@@ -96,7 +93,9 @@ export default function AccountInfo({ accountData }: any) {
                     </Grid>
                     {/* Display bsb number and account number */}
                     <Grid item xs={12} className='mt-2 !ml-20 !mb-4'>
-                        <Typography variant='subtitle1'>{ACHTEXT}</Typography>
+                        <Typography variant='subtitle1'>
+                            {TEXTS.accountInfo.moneyTransferDetailsDescription}
+                        </Typography>
                     </Grid>
                     <Grid item xs={12} className='!mt-2 !ml-8'>
                         <Stack direction='row' spacing={2}>
@@ -157,7 +156,7 @@ export default function AccountInfo({ accountData }: any) {
                         AVAILABLE BALANCE
                     </Typography>
                     <a
-                        href='https://developer.mastercard.com/open-banking-au/documentation/api-reference/?view=api#GetCustomerAccounts'
+                        href={LINKS.accountInfo.availableBalance}
                         target='_blank'
                         rel='noreferrer'
                     >
@@ -167,7 +166,9 @@ export default function AccountInfo({ accountData }: any) {
             </Grid>
             {/* Display additional account details */}
             <Grid item xs={12} className='mt-2 !ml-20 !mb-4'>
-                <Typography variant='subtitle1'>{AVAILBTEXT}</Typography>
+                <Typography variant='subtitle1'>
+                    {TEXTS.accountInfo.availableBalance}
+                </Typography>
             </Grid>
             <Grid item xs={12} className='!mt-2 !ml-8'>
                 <Stack direction='row' spacing={2}>
@@ -261,7 +262,7 @@ export default function AccountInfo({ accountData }: any) {
                         className='account-info__label'
                         fontWeight='bold'
                     >
-                        clearedBalancedate :
+                        clearedBalanceDate :
                     </Typography>
                     <Typography
                         className='text-gray-700'

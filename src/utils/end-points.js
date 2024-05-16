@@ -1,8 +1,7 @@
-
 /* eslint-disable no-undef, @typescript-eslint/no-var-requires */
 
 module.exports = {
-    paths: ['/aggregation', '/notifications' ],
+    paths: ['/aggregation', '/notifications'],
     domains: {
         us: 'https://api.finicity.com',
         au: 'https://api.openbanking.mastercard.com.au/',

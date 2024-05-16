@@ -8,34 +8,36 @@
 
 ## Table of Contents
 
-- [Overview](#overview)
-  - [Connect & Consent](#connect-and-consent)
-  - [References](#references)
-- [Set up](#set-up)
-  - [Compatibility](#compatibility)
-  - [Installation](#Installation)
-  - [Test](#test)
-- [Demo](#demo)
+-   [Overview](#overview)
+    -   [Connect & Consent](#connect-and-consent)
+    -   [References](#references)
+-   [Set up](#set-up)
+    -   [Compatibility](#compatibility)
+    -   [Installation](#Installation)
+    -   [Test](#test)
+-   [Demo](#demo)
     1. [Generate your credentials](#1-generate-your-credentials)
     2. [Add credentials to the .env file](#2-add-credentials-to-the-env-file)
     3. [Run application](#3-run-application)
     4. [Create your first customer](#4-create-your-first-customer)
     5. [Add a bank account to customer](#5-add-a-bank-account-to-customer)
     6. [Pull account information](#6-pull-account-information)
-- [Hosting Reference App](#hosting-reference-app)
-- [Contact Us](#contact-us)
+-   [Hosting Reference App](#hosting-reference-app)
+-   [Contact Us](#contact-us)
 
 ## Overview
 
 The Open Banking Reference App allows you to explore [Mastercard's Open Banking Service (MOBS) For Australia](https://developer.mastercard.com/open-banking-au/documentation/) to incorporate it into your product. This application allows you to:
-* Create test customers
-* Obtain consent to access test accounts data
-* Retrieve the data from the shared accounts
+
+-   Create test customers
+-   Obtain consent to access test accounts data
+-   Retrieve the data from the shared accounts
 
 > **IMPORTANT**: Please note that applications accessing the Mastercard Open Banking APIs must be hosted within Australia.
 
 ### Connect and Consent
-The Reference App includes a launch of [Connect](https://developer.mastercard.com/open-banking-au/documentation/connect/) - a MOBS product which facilitates the collection of consent from an end user (customer) to access their financial data. 
+
+The Reference App includes a launch of [Connect](https://developer.mastercard.com/open-banking-au/documentation/connect/) - a MOBS product which facilitates the collection of consent from an end user (customer) to access their financial data.
 [Consent](https://developer.mastercard.com/open-banking-au/documentation/consent/) is required by CDR regulation in Australia to get access to the consumer’s financial data. Integrating Connect with your product will streamline the process of obtaining consent while following the compliance rules. After consent is given, the Reference App shows how the consent receipt ID can be fetched in order to make further calls to FIs.
 
 ### References
@@ -45,6 +47,7 @@ The Reference App includes a launch of [Connect](https://developer.mastercard.co
 -   [Connect SDK](https://developer.mastercard.com/open-banking-au/documentation/connect/integrating-with-connect/)
 
 ## Set up
+
 ### Compatibility
 
 -   **Node (v14+)**
@@ -77,11 +80,13 @@ npm run test
 ![landing page](docs/test_case_result.png)
 
 ## Demo
+
 ### 1. Generate your credentials
+
 -   Login to the [Mastercard developer's portal](https://developer.mastercard.com/product/open-banking/)
 -   Log in and click the **Create New Project** button at the top left of the page.
 -   Enter your project name and select Open Banking as the API service, then click on the **Proceed** button.
--   Select **Australia**  in the Commercial Countries drop down list, and click on the **Proceed** button.
+-   Select **Australia** in the Commercial Countries drop down list, and click on the **Proceed** button.
 -   Enter a description of your project on the next page, and click on the **Create Project** button.
 -   Take note of your Partner ID, Partner Secret and App Key. These will be required in the following sections.
 
@@ -106,12 +111,14 @@ Execute the following command to start the Reference App:
 ```shell
 npm start
 ```
+
 When the application is launched in a browser, it prompts either to proceed with demo or go to GitHub. Select **View Demo**.
 This will redirect you to the first step of the user flow.
 
 ![landing page](docs/landing-page.png)
 
 ### 4. Create your first customer
+
 To access any financial data, first you need to create a customer. Provide a unique identifier for the customer.
 To proceed further, select **Next**.
 
@@ -124,8 +131,9 @@ To start, select **Connect Bank Account**:
 
 ![add bank account page](docs/add-bank-account.png)
 
-This flow is a simulation of what a customer will see when consenting to share their financial data with you. 
+This flow is a simulation of what a customer will see when consenting to share their financial data with you.
 In Connect flow:
+
 1. Search for **Finbank Aus OAuth**.
 2. Check all boxes, and then click **I consent**.
 3. Click **Next**.
@@ -135,16 +143,17 @@ In Connect flow:
 
 ![connect flow finbank](docs/account-consent-workflow.png)
 
-When the consent to access accounts is successfully obtained and Connect is closed, 
+When the consent to access accounts is successfully obtained and Connect is closed,
 the Reference App is now ready to access the consented accounts.
 
 ### 6. Pull account information
+
 At this point having customer ID and consent receipt ID allows you to retrieve the financial data from consented accounts. The Reference App shows examples of how to retrieve:
+
 1. The account's Money Transfer details
 2. The available balance
 
 ![account information page](docs/account-information.png)
-
 
 ## Hosting Reference App
 
@@ -184,5 +193,6 @@ app.listen(port, () => {
 ```
 
 ## Contact Us
+
 Have issues or concerns regarding the application?
 Please create an issue in the GitHub and our team will try to address the issue as soon as possible.
