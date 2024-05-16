@@ -142,7 +142,7 @@ export const STEPS = [
                 <div>
                     The Connect application allows customers to select accounts
                     they want to share and give you consent to access them. As
-                    soon as consent it given, Mastercard Open Banking Service
+                    soon as consent is given, Mastercard Open Banking Service
                     generates a consent receipt ID required for further API
                     calls. To learn more,
                     <span>
