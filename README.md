@@ -78,10 +78,11 @@ npm run test
 
 ## Demo
 ### 1. Generate your credentials
--   Login to [Mastercard developer's portal](https://developer.mastercard.com/product/open-banking/)
+-   Login to the [Mastercard developer's portal](https://developer.mastercard.com/product/open-banking/)
 -   Log in and click the **Create New Project** button at the top left of the page.
--   Enter project name and select Open Banking as the API service and click on **Proceed** button.
--   Select **Australia** region on the service details page and click on the **Create Project** button.
+-   Enter your project name and select Open Banking as the API service, then click on the **Proceed** button.
+-   Select **Australia**  in the Commercial Countries drop down list, and click on the **Proceed** button.
+-   Enter a description of your project on the next page, and click on the **Create Project** button.
 -   Take note of your Partner ID, Partner Secret and App Key. These will be required in the following sections.
 
 For more details see [Onboarding](https://developer.mastercard.com/open-banking-au/documentation/onboarding/).
@@ -90,7 +91,7 @@ For more details see [Onboarding](https://developer.mastercard.com/open-banking-
 
 ### 2. Add credentials to the .env file
 
-Open Banking Reference App needs Sandbox API credentials added in the `.env` file to make the API calls:
+The Open Banking Reference App needs Sandbox API credentials adding to the `.env` file to make the API calls:
 
 1. Create the `.env` file.
     ```shell
@@ -98,7 +99,7 @@ Open Banking Reference App needs Sandbox API credentials added in the `.env` fil
     ```
 2. Update the `.env` file with your Sandbox API credentials generated in step 1.
 
-### 3. Run application
+### 3. Run the application
 
 Execute the following command to start the Reference App:
 
@@ -111,14 +112,14 @@ This will redirect you to the first step of the user flow.
 ![landing page](docs/landing-page.png)
 
 ### 4. Create your first customer
-To access any financial data, first you need to create a customer. In the prompted screen provide a unique Customer ID. This identifier will be used by MOBS to request financial data of the customer via API calls.
+To access any financial data, first you need to create a customer. Provide a unique identifier for the customer.
 To proceed further, select **Next**.
 
 ![create customer page](docs/create-customer.png)
 
 ### 5. Add a bank account to customer
 
-Now that you have a **Customer ID**, the next step is to add a bank account. The prompted screen lists a name of the Financial Institution and credentials to use during Connect flow.
+Now that you have a **Customer ID**, the next step is to add a bank account. The screen lists a name of the Financial Institution and credentials to use during Connect flow.
 To start, select **Connect Bank Account**:
 
 ![add bank account page](docs/add-bank-account.png)
@@ -139,8 +140,8 @@ the Reference App is now ready to access the consented accounts.
 
 ### 6. Pull account information
 At this point having customer ID and consent receipt ID allows you to retrieve the financial data from consented accounts. The Reference App shows examples of how to retrieve:
-1. Account's Money Transfer details
-2. Available balance
+1. The account's Money Transfer details
+2. The available balance
 
 ![account information page](docs/account-information.png)
 
