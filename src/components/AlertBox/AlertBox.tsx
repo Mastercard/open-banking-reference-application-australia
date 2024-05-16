@@ -6,7 +6,7 @@ import {
     DialogContentText,
     Alert,
 } from '@mui/material';
-import { PARTNERID, PARTNERSECRET, APP_KEY } from '../../config/config';
+import { PARTNERID, PARTNERSECRET, APP_KEY, TEXTS } from '../../config/config';
 
 export default function AlertBox() {
     const [openAlert] = useState(!(PARTNERID && PARTNERSECRET && APP_KEY));
@@ -24,7 +24,7 @@ export default function AlertBox() {
                     color: '#EB001B',
                 }}
             >
-                Invalid Configuration
+                {TEXTS.alertBox.invalidConfiguration}
             </DialogTitle>
             <DialogContent>
                 <DialogContentText id='alert-dialog-description'>
@@ -34,10 +34,7 @@ export default function AlertBox() {
                             color: '#EB001B',
                         }}
                     >
-                        <div>
-                            Looks like you have configured incorrect Partner ID,
-                            Partner Secret, or App key.
-                        </div>
+                        <div>{TEXTS.alertBox.invalidKeys}</div>
                     </Alert>
                 </DialogContentText>
             </DialogContent>

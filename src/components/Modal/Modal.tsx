@@ -3,7 +3,13 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import { Box, Link, Stack, Typography } from '@mui/material';
 import ExternalIcon from '../../utils/external-icon';
-import { PARTNERID, PARTNERSECRET, APP_KEY } from '../../config/config';
+import {
+    PARTNERID,
+    PARTNERSECRET,
+    APP_KEY,
+    TEXTS,
+    LINKS,
+} from '../../config/config';
 
 export default function Modal() {
     const [open, setOpen] = useState(!!(PARTNERID && PARTNERSECRET && APP_KEY));
@@ -36,8 +42,7 @@ export default function Modal() {
                             Open Banking Australia
                         </Typography>
                         <Typography className=''>
-                            Easily connect your customer's financial data to
-                            your product.
+                            {TEXTS.modal.description}
                         </Typography>
                         <Stack
                             direction='row'
@@ -47,13 +52,13 @@ export default function Modal() {
                         >
                             <Link
                                 variant='caption'
-                                href='https://developer.mastercard.com/open-banking-au/documentation/'
+                                href={LINKS.modal.product}
                                 target='_blank'
                                 className='!no-underline'
                                 fontWeight={'bold'}
                                 color={'#111'}
                             >
-                                Learn more about the product
+                                {TEXTS.modal.more}
                             </Link>
                             <img
                                 src='/utility.svg'
@@ -72,7 +77,7 @@ export default function Modal() {
                             View demo
                         </Button>
                         <a
-                            href='https://github.com/Mastercard/open-banking-reference-application'
+                            href={LINKS.modal.github}
                             rel='noreferrer'
                             target='_blank'
                         >

@@ -1,4 +1,5 @@
 import { Card, CardContent, Typography } from '@mui/material';
+import { TEXTS } from '../../config/config';
 
 export default function SandBoxTip() {
     return (
@@ -9,8 +10,7 @@ export default function SandBoxTip() {
                 </Typography>
 
                 <Typography className='!mb-6 text-gray-700 text-base font-normal leading-5'>
-                    Please select Finbank Aus OAuth and use the following
-                    username and password.
+                    {TEXTS.sandbox.tip}
                 </Typography>
 
                 <div className='flex items-start'>
@@ -25,19 +25,19 @@ export default function SandBoxTip() {
 
                     <div className='flex flex-col items-start gap-4 w-1/3'>
                         <Typography className='mb-2 text-base !font-[700]'>
-                            Banking Userid
+                            {TEXTS.sandbox.usernameField}
                         </Typography>
                         <Typography className='text-base'>
-                            profile_4100
+                            {TEXTS.sandbox.usernameValue}
                         </Typography>
                     </div>
 
                     <div className='flex flex-col items-start gap-4 w-1/3'>
                         <Typography className='mb-2 text-base !font-[700]'>
-                            Banking Password
+                            {TEXTS.sandbox.passwordField}
                         </Typography>
                         <Typography className='text-base'>
-                            profile_4100
+                            {TEXTS.sandbox.passwordValue}
                         </Typography>
                     </div>
                 </div>

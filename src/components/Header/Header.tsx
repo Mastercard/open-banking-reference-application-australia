@@ -7,6 +7,7 @@ import {
     Button,
 } from '@mui/material';
 import ExternalIcon from '../../utils/external-icon';
+import { LINKS } from '../../config/config';
 
 export default function Header() {
     return (
@@ -17,7 +18,7 @@ export default function Header() {
                 </ImageListItem>
 
                 <a
-                    href='https://developer.mastercard.com'
+                    href={LINKS.header.openbanking}
                     target='_blank'
                     rel='noreferrer'
                     style={{
@@ -62,7 +63,7 @@ export default function Header() {
                         </Typography>
                     </Box>
                     <a
-                        href='https://github.com/Mastercard/open-banking-reference-application-australia/'
+                        href={LINKS.header.github}
                         target='_blank'
                         rel='noreferrer'
                         style={{ marginTop: '10px' }}
