@@ -212,9 +212,10 @@ export default function ConnectForm() {
                     console.error('error', error);
                     throw error;
                 });
-            const achData = await Promise.all(
+            let achData = await Promise.all(
                 getAccountACHInformation(accounts, customerId, consent)
             );
+            achData = achData.filter((ach: any) => ach);
             accounts.forEach((acc: any) => {
                 const achInfo = achData.find(
                     ({ accountId }: any) => acc?.id === accountId

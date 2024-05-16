@@ -7,22 +7,22 @@ import {
     ImageList,
 } from '@mui/material';
 
+import { TEXTS, LINKS } from '../../config/config';
+
 export default function Cards() {
     const cardsData = [
         {
             logo: '/list.svg',
             title: 'API Products',
-            description:
-                'Check out the full product catalog of Open Banking services from Mastercard',
-            href: 'https://developer.mastercard.com/open-banking-au/documentation/api-reference/',
+            description: TEXTS.cards.apiProducts,
+            href: LINKS.cards.apiProducts,
             anchorTitle: 'Learn more',
         },
         {
             logo: '/download.svg',
             title: 'Quick start guide',
-            description:
-                'Learn about key concepts and find out how to quickly connect to our services',
-            href: 'https://developer.mastercard.com/open-banking-au/documentation/quick-start-guide/',
+            description: TEXTS.cards.quickStart,
+            href: LINKS.cards.quickStart,
             anchorTitle: 'Learn more',
         },
     ];

@@ -1,5 +1,6 @@
 import { Grid, Stack, Typography } from '@mui/material';
 import InputField from '../../FormFields/InputField';
+import { TEXTS } from '../../../../config/config';
 
 export default function UserNameForm(props: any) {
     const {
@@ -13,7 +14,7 @@ export default function UserNameForm(props: any) {
                         Username
                     </Typography>
                     <Typography fontSize={16} variant='body1'>
-                        Enter a unique identifier for the user
+                        {TEXTS.createCustomerForm.description}
                     </Typography>
                 </Stack>
             </Grid>

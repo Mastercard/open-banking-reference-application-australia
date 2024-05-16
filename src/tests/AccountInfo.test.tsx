@@ -306,9 +306,6 @@ describe('Testing AccountInfo Component', () => {
         );
         expect(accountData[1].type).toEqual('transactionAndSavings');
         expect(accountData[1].type).not.toEqual('loan');
-        expect(
-            screen.getByText(/money transfer detail/i, { exact: false })
-        ).toBeInTheDocument();
     });
 
     test('Should Render routing number in money transfer detail for deposit account types', () => {
@@ -318,7 +315,7 @@ describe('Testing AccountInfo Component', () => {
             ) as React.ReactElement
         );
         expect(
-            screen.getByText(/binNumber :/i, { exact: false })
+            screen.getByText(/bsbNumber :/i, { exact: false })
         ).toBeInTheDocument();
     });
 

@@ -14,7 +14,7 @@ export default function ConnectInitiation({
                 <Grid item xs={6} className='mt-2'>
                     <Stack direction='column' spacing={2}>
                         <Typography variant='body2' className='!font-[700]'>
-                            Customer Name
+                            Username
                         </Typography>
                         <Typography
                             variant='body2'
