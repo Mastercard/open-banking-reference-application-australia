@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import Modal from '../components/Modal/Modal';
 
-describe.skip('Testing Modal Component', () => {
+describe('Testing Modal Component', () => {
     test('Should have text - Open banking', () => {
         render((<Modal />) as React.ReactElement);
         expect(
-            screen.getByText('open banking', { exact: false })
+            screen.getByText(/Open Banking Australia/, { exact: false })
         ).toBeInTheDocument();
     });
 
