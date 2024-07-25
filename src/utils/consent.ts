@@ -1,5 +1,5 @@
-import { URL } from '../config/config';
-import { generateFetchHeaders } from './request-headers';
+import { url } from '../config';
+import { generateFetchHeaders } from './helper';
 
 /**
  * Subscribes for cosent notification
@@ -40,8 +40,8 @@ const getValidSubscriptionUuid = async (
     token = ''
 ): Promise<string> => {
     const result = await fetchWebhookToken(subscriptionUuid);
-    if (!result?.success && result?.error) {
-        /** update subscriptionUuid as current notification webhook has expired */
+    if ((!result?.success && result?.error) || result.total > 99) {
+        /** update subscriptionUuid as current notification webhook has expired or limit exhausted for receiving notifications*/
         return updateSubscriptionUuid(subscription.id, token);
     } else {
         return subscriptionUuid;
@@ -56,12 +56,12 @@ const getValidSubscriptionUuid = async (
  */
 const updateSubscriptionUuid = async (subscriptionId: string, token = '') => {
     const webHookEndpoint = await createWebhookEndPoint();
-    const requestHeaders = generateFetchHeaders('PUT', token, 'WEBHOOK');
+    const requestHeaders = generateFetchHeaders('PUT', { token });
     const body = JSON.stringify({
         url: `https://webhook.site/${webHookEndpoint}`,
     });
     await fetch(
-        URL.updateSubscriptionUrl.replace('<subscriptionUuid>', subscriptionId),
+        url.updateSubscriptionUrl.replace('<subscriptionUuid>', subscriptionId),
         { ...requestHeaders, body }
     );
     return webHookEndpoint;
@@ -102,7 +102,7 @@ const fetchWebhookToken = async (subscriptionUuid: string): Promise<any> => {
     const headers = new Headers();
     headers.append('Accept', 'application/json');
     const response = await fetch(
-        URL.retrieveConsent.replace('<subscriptionUuid>', subscriptionUuid),
+        url.retrieveConsent.replace('<subscriptionUuid>', subscriptionUuid),
         { headers, method: 'GET' }
     );
     return response.json();
@@ -115,8 +115,8 @@ const fetchWebhookToken = async (subscriptionUuid: string): Promise<any> => {
  */
 const getActiveSubsriptions = async (token: string): Promise<string> => {
     try {
-        const requestHeaders = generateFetchHeaders('GET', token, 'WEBHOOK');
-        const result = await fetch(URL.getSubscriptions, { ...requestHeaders });
+        const requestHeaders = generateFetchHeaders('GET', { token });
+        const result = await fetch(url.getSubscriptions, { ...requestHeaders });
         const subscriptions = (await result.json())?.subscriptions;
         let activeSubscription;
         if (subscriptions?.length > 0) {
@@ -151,7 +151,7 @@ const createWebhookEndPoint = async (): Promise<string> => {
     try {
         const headers = new Headers();
         headers.append('Accept', 'application/json');
-        const response = await fetch(URL.createWebhookEndPoint, {
+        const response = await fetch(url.createWebhookEndPoint, {
             headers,
             method: 'POST',
         });
@@ -172,12 +172,12 @@ const subscribeForConsent = async (
     webHookEndpoint: string
 ): Promise<void> => {
     try {
-        const requestHeaders = generateFetchHeaders('POST', token, 'WEBHOOK');
+        const requestHeaders = generateFetchHeaders('POST', { token });
         const body = JSON.stringify({
             url: `https://webhook.site/${webHookEndpoint}`,
             notificationType: 'CONSENT',
         });
-        await fetch(URL.getSubscriptions, { ...requestHeaders, body });
+        await fetch(url.getSubscriptions, { ...requestHeaders, body });
     } catch (error) {
         throw new Error('Failed to subscribe for consent notification');
     }

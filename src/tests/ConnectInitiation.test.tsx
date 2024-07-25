@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import ConnectInitiation from '../components/ConnectInitation/ConnectInitiation';
+import ConnectInitiation from '../components/ConnectInitiation/ConnectInitiation';
 
 const userData = {
     username: 'testing-customer',

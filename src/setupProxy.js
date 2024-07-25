@@ -3,7 +3,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function (app) {
     app.use(
-        ['/aggregation', '/notifications', '/connect'],
+        ['/aggregation', '/notifications', '/connect', '/decisioning'],
         createProxyMiddleware({
             target: 'https://api.openbanking.mastercard.com.au/',
             changeOrigin: true,

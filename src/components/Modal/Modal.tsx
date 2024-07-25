@@ -1,21 +1,24 @@
 import { useState } from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import { Box, Link, Stack, Typography } from '@mui/material';
-import ExternalIcon from '../../utils/external-icon';
-import {
-    PARTNERID,
-    PARTNERSECRET,
-    APP_KEY,
-    TEXTS,
-    LINKS,
-} from '../../config/config';
+import { Box, Button, Dialog, Link, Stack, Typography } from '@mui/material';
 
-export default function Modal() {
+import { ExternalIcon } from '../../components';
+
+import './Modal.css';
+import data from './data';
+
+import { PARTNERID, PARTNERSECRET, APP_KEY } from '../../config';
+
+export default function Modal({ handleModalClose }: any) {
     const [open, setOpen] = useState(!!(PARTNERID && PARTNERSECRET && APP_KEY));
 
-    const handleClose = () => {
+    /**
+     * Handle close event handler for modal close
+     */
+    const handleClose = async () => {
         setOpen(false);
+        if (handleModalClose) {
+            await handleModalClose();
+        }
     };
 
     return (
@@ -38,11 +41,11 @@ export default function Modal() {
                         <Typography className='ref-text'>
                             REFERENCE APP
                         </Typography>
-                        <Typography className='open-bannking-text'>
+                        <Typography className='open-banking-text'>
                             Open Banking Australia
                         </Typography>
                         <Typography className=''>
-                            {TEXTS.modal.description}
+                            {data.text.description}
                         </Typography>
                         <Stack
                             direction='row'
@@ -52,18 +55,18 @@ export default function Modal() {
                         >
                             <Link
                                 variant='caption'
-                                href={LINKS.modal.product}
+                                href={data.link.product}
                                 target='_blank'
                                 className='!no-underline'
                                 fontWeight={'bold'}
                                 color={'#111'}
                             >
-                                {TEXTS.modal.more}
+                                {data.text.more}
                             </Link>
                             <img
+                                id='product-img'
                                 src='/utility.svg'
-                                style={{ marginTop: '1px' }}
-                                alt=''
+                                alt='product-img'
                             />
                         </Stack>
                     </Box>
@@ -77,7 +80,7 @@ export default function Modal() {
                             View demo
                         </Button>
                         <a
-                            href={LINKS.modal.github}
+                            href={data.link.github}
                             rel='noreferrer'
                             target='_blank'
                         >
