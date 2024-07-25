@@ -12,7 +12,7 @@ import JsonViewer from './JsonViewer/jsonViewer';
 import Modal from './Modal/Modal';
 import Product from './Product/Product';
 import SandBoxTip from './SandBoxTip/SandBoxTip';
-import SnackBar from './SnackbarComponent/SnackbarComponent';
+import SnackBarNotification from './SnackBarNotification/SnackBarNotification';
 import Usecases from './Usecases/Usecases';
 
 export {
@@ -30,6 +30,6 @@ export {
     Modal,
     Product,
     SandBoxTip,
-    SnackBar,
+    SnackBarNotification,
     Usecases,
 };

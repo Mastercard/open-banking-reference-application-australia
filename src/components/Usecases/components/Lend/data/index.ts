@@ -15,6 +15,10 @@ const requestBody = {
 };
 
 const data = {
+    text: {
+        accountError: 'Supported accounts for report generation not added.',
+        waitForReport: 'Please wait while the report is generating.',
+    },
     reports: [
         {
             name: 'Verification of Assets',

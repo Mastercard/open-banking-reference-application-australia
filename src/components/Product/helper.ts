@@ -135,14 +135,7 @@ const getMoneyTransferDetails = async (
         }
     }
 
-    if (jsonArray.length === 0) {
-        const accountTypeError = new Error();
-        accountTypeError.message =
-            'None of the Added accounts are supported for money transfer detail product';
-        accountTypeError.cause = 'warning';
-        throw accountTypeError;
-    }
-
+    checkForAccountError(product, jsonArray);
     return { tableData: tableDataArray, response: jsonArray };
 };
 
@@ -180,14 +173,8 @@ const getAvailableBalanceLive = async (
         }
     }
 
-    if (jsonArray.length === 0) {
-        const accountTypeError = new Error();
-        accountTypeError.message =
-            'None of the  Added accounts are supported for available balance live product';
-        accountTypeError.cause = 'warning';
-        throw accountTypeError;
-    }
-    return { tableData: tableDataArray, response: jsonArray }; //3 rows
+    checkForAccountError(product, jsonArray);
+    return { tableData: tableDataArray, response: jsonArray };
 };
 
 /**
@@ -238,4 +225,13 @@ const getTableData = (jsonData: any, columns: any) => {
         });
         return candidate;
     });
+};
+
+const checkForAccountError = (product: any, jsonArray: any) => {
+    if (jsonArray.length === 0) {
+        const accountTypeError = new Error();
+        accountTypeError.message = product.error.accountError;
+        accountTypeError.cause = 'warning';
+        throw accountTypeError;
+    }
 };

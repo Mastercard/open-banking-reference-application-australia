@@ -1,40 +1,25 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { Grid, Stack, Tabs, Tab } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { SnackBar } from '../../components';
+import { SnackBarNotification } from '../../components';
 import { Lend, Manage, Pay } from './components';
 
 import data from './data';
+import { snackbarActions } from '../../store/slices/snackbar';
 
 export default function Usecases({ requestData }: any) {
+    const dispatch = useDispatch();
     const reportGenerationProgress = useSelector(
         (state: any) => state.reportProgress.progress
     );
     const [canChangeTab, setCanChangeTab] = useState<boolean>(true);
     const [currentUsecase, setCurrentUsecase] = useState<any>('Lend');
-    const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [snackbarContent] = useState<any>({
-        errorMessage: 'Please wait while the report is generating',
-        severity: 'warning',
-        position: {
-            vertical: 'bottom',
-            horizontal: 'center',
-        },
-        timeout: 2000,
-    });
     const a11yProps = (index: number) => {
         return {
             id: `simple-tab-${index}`,
             'aria-controls': `simple-tabpanel-${index}`,
         };
-    };
-
-    /**
-     * Snack bar reset handler
-     */
-    const resetSnackbar = async () => {
-        setOpenSnackbar(false);
     };
 
     useEffect(() => {
@@ -55,7 +40,13 @@ export default function Usecases({ requestData }: any) {
                 data.usecases.find((report: any) => newValue === report)
             );
         } else {
-            setOpenSnackbar(true);
+            dispatch(
+                snackbarActions.open({
+                    message: data.text.waitForReport,
+                    severity: 'warning',
+                    timeout: 2000,
+                })
+            );
         }
     };
     return (
@@ -99,11 +90,7 @@ export default function Usecases({ requestData }: any) {
                 )}
                 {currentUsecase === 'Pay' && <Pay requestData={requestData} />}
             </Grid>
-            <SnackBar
-                openSnackbar={openSnackbar}
-                handleSnackbar={resetSnackbar}
-                snackbarContent={snackbarContent}
-            ></SnackBar>
+            <SnackBarNotification></SnackBarNotification>
         </Grid>
     );
 }

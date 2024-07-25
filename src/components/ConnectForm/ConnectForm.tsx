@@ -23,6 +23,7 @@ import {
     CircularProgress,
 } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { useDispatch } from 'react-redux';
 import { Formik, Form } from 'formik';
 
 import {
@@ -30,7 +31,7 @@ import {
     Cards,
     ConnectInitiation,
     Modal,
-    SnackBar,
+    SnackBarNotification,
     Usecases,
 } from '../../components';
 import { PARTNERID, PARTNERSECRET, AUTO_CREATE_CUSTOMER } from '../../config';
@@ -38,6 +39,7 @@ import {
     subscribeForConsentNotification,
     retrieveConsent,
 } from '../../utils/consent';
+import { snackbarActions } from '../../store/slices/snackbar';
 
 import './ConnectForm.css';
 import {
@@ -57,6 +59,7 @@ import UserNameForm from './Forms/UserNameForm';
 const { formId, formField } = connectFormModel;
 
 export default function ConnectForm() {
+    const dispatch = useDispatch();
     const [appToken, setAppToken] = useState('');
     const [subscriptionUuid, setSubscriptionUuid] = useState<string>('');
     const [user, setUser] = useState<any>({});
@@ -71,15 +74,6 @@ export default function ConnectForm() {
     const [completedSteps, setCompletedSteps] = useState<string[]>([]);
     const [accountData, setAccountData] = useState<any>([]);
     const [loading, setLoading] = useState(false);
-    const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [snackbarContent, setSnackbarContent] = useState<any>({
-        errorMessage: 'Something went wrong',
-        severity: 'error',
-        position: {
-            vertical: 'bottom',
-            horizontal: 'center',
-        },
-    });
 
     /**
      * Handle close event for Modal
@@ -124,19 +118,13 @@ export default function ConnectForm() {
     };
 
     /**
-     * Handle close event for snackbar
-     */
-    const resetSnackbar = async () => {
-        setOpenSnackbar(false);
-    };
-
-    /**
      * Handle submit events for connect form
      * @param userName unique username for activating customer
      * @param resetForm restForm method
      */
     const handleSubmit = async ({ userName }: any, { resetForm }: any) => {
         try {
+            dispatch(snackbarActions.close());
             setLoading(true);
             if (activeStep === 0 && !AUTO_CREATE_CUSTOMER) {
                 await initializeApp(userName);
@@ -163,7 +151,7 @@ export default function ConnectForm() {
      * @param reset is demo resetted
      */
     const handleNext = (skip = false, reset = false) => {
-        setOpenSnackbar(false);
+        dispatch(snackbarActions.close());
         setLoading(false);
         if (!skip) {
             setActiveStep(reset ? 1 : (prevActiveStep) => prevActiveStep + 1);
@@ -185,13 +173,9 @@ export default function ConnectForm() {
      * @param error Error
      */
     const handleError = (error: any = {}) => {
-        if (error.message) {
-            setSnackbarContent({
-                ...snackbarContent,
-                errorMessage: error.message,
-            });
-        }
-        setOpenSnackbar(true);
+        dispatch(
+            snackbarActions.open({ message: error.message, severity: 'error' })
+        );
         setLoading(false);
     };
 
@@ -327,7 +311,7 @@ export default function ConnectForm() {
      * Handle reset demo
      */
     const handleReset = async () => {
-        setOpenSnackbar(false);
+        dispatch(snackbarActions.close());
         setLoading(false);
         setActiveStep(0);
         setExpanded('panel0');
@@ -694,11 +678,7 @@ export default function ConnectForm() {
                     </Box>
                 </Grid>
             </Grid>
-            <SnackBar
-                openSnackbar={openSnackbar}
-                handleSnackbar={resetSnackbar}
-                snackbarContent={snackbarContent}
-            ></SnackBar>
+            <SnackBarNotification></SnackBarNotification>
             <Modal handleModalClose={handleModalClosed} />
         </Fragment>
     );

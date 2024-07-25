@@ -54,7 +54,7 @@ The Reference App includes a launch of [Connect](https://developer.mastercard.co
 
 -   **Node (v14+)**
 -   **React (v18.3.1)**
- 
+
 This application is built using the React framework. React requires Node version 14+.
 However, It is recommended that you use one of NodeJS's LTS releases or one of the [more general recent releases](https://github.com/nodejs/Release). A Node version manager such as [nvm](https://github.com/creationix/nvm) (Mac and Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows) can help with this.
 
@@ -107,30 +107,25 @@ The Open Banking Reference App needs Sandbox API credentials adding to the `.env
 
 ### 3. Setup and Run the application
 
-- ##### Run without docker 
-    
+-   ##### Run without docker
     The following command will install the required depdendancies on your machine. (This command should be executed during the initial setup)
     ```
     npm i
     ```
     Execute the following command to start the Reference App:
-    
     ```shell
     npm start
     ```
-- ##### Run with docker
-    **Pre-requisites**
-        - Docker installed and running on your machine: https://docs.docker.com/get-docker/
+-   ##### Run with docker
+
+    **Pre-requisites** - Docker installed and running on your machine: https://docs.docker.com/get-docker/
 
     The followind command will create the docker image of the application and will start the application.
-    
+
     ```
     docker compose up
     ```
-    
 
-    
-    
 When the application is launched in a browser, it prompts either to proceed with demo or go to GitHub. Select **View Demo**.
 This will redirect you to the first step of the user flow.
 
@@ -177,39 +172,34 @@ At this point having customer ID and consent receipt ID allows you to retrieve t
 
 1. Account id
 2. Account name
-2. Account type
-3. Balance
-4. Currency
+3. Account type
+4. Balance
+5. Currency
 
 ![account information page](docs/account-information.png)
 
 ### 7. Explore usecases
+
 The use cases section provides you with an overview of the different solutions offered by Mastercard Open Banking.
-- **Lend** 
+
+-   **Lend**
     Make confident lending decisions and offer a hassle-free lending experience for your customers with the help of **Reports**.
 
 ![lend](docs/lend.png)
 
-
-
-- **Manage**
-     Provide a consolidated view of your customers’ finances in a single space to help your customers manage their wealth better.
+-   **Manage**
+    Provide a consolidated view of your customers’ finances in a single space to help your customers manage their wealth better.
 
 ![manage](docs/manage.png)
 
-
-
-- **Pay**
-     Provide a seamless payment experience for your customers.
+-   **Pay**
+    Provide a seamless payment experience for your customers.
 
 ![pay](docs/pay.png)
 
 ![pay2](docs/pay-2.png)
 
 ![pay3](docs/pay-3.png)
- 
-   
-
 
 ## Hosting Reference App
 

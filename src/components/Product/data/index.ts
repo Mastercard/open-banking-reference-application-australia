@@ -67,6 +67,10 @@ const data = {
                 'Get the account number and money transfer details that can be used for, e.g., payment use case. Only Transaction & Savings account types are supported.',
             api: '/aggregation/v3/customers/<customerId>/accounts/<accountId>/details',
             link: 'https://developer.mastercard.com/open-banking-au/documentation/api-reference/?view=api#GetMoneyTransferDetails',
+            error: {
+                accountError:
+                    'None of the Added accounts are supported for money transfer detail product',
+            },
             columns: [
                 {
                     accessorKey: 'id',
@@ -91,6 +95,10 @@ const data = {
                 'Retrieves the latest cached available & cleared account balances for a customer. Since we update and store balances throughout the day, this is the most accurate balance information available when a connection to a Financial Institution is unavailable or when a faster response is needed.  Only Transaction & Savings and Term Deposit account types are supported.',
             api: '/aggregation/v1/customers/<customerId>/accounts/<accountId>/availableBalance/live',
             link: 'https://developer.mastercard.com/open-banking-au/documentation/api-reference/?view=api#GetAvailableBalanceLive',
+            error: {
+                accountError:
+                    'None of the  Added accounts are supported for available balance live product',
+            },
             columns: [
                 {
                     accessorKey: 'id',
@@ -119,6 +127,10 @@ const data = {
                 ' Retrieve account owner details where available from a financial institution',
             api: '/aggregation/v3/customers/<customerId>/accounts/<accountId>/owner',
             link: 'https://developer.mastercard.com/open-banking-au/documentation/api-reference/?view=api#GetAccountOwnergit',
+            error: {
+                accountError:
+                    'None of the  Added accounts are supported for available balance live product',
+            },
             columns: [
                 {
                     accessorKey: 'id',

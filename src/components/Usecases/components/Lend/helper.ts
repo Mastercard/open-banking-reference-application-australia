@@ -17,9 +17,7 @@ export const submitReport = async (
     dispatch: Dispatch
 ) => {
     if (!checkForSupportedAccounts(reportData, requestData)) {
-        const accountError = new Error(
-            'Supported accounts for report generation not added.'
-        );
+        const accountError = new Error(data.text.accountError);
         accountError.cause = 'warning';
         throw accountError;
     }

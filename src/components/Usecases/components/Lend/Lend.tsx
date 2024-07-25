@@ -10,12 +10,13 @@ import {
 } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { reportProgressActions } from '../../../../store/slices/report-progress';
 import {
     CircularProgressWithValue,
     Product,
-    SnackBar,
+    SnackBarNotification,
 } from '../../../../components';
-import { reportProgressActions } from '../../../../store/slices/report-progress';
+import { snackbarActions } from '../../../../store/slices/snackbar';
 
 import './Lend.css';
 import data from './data';
@@ -29,15 +30,6 @@ export default function Lend({ requestData }: any) {
     const [currentReport, setCurrentReport] = useState<any>(data.reports[0]);
     const [disableGenerateReport, setDisableGenerateReport] =
         useState<boolean>(false);
-    const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [snackbarContent, setSnackbarContent] = useState<any>({
-        errorMessage: 'Something went wrong',
-        severity: 'error',
-        position: {
-            vertical: 'bottom',
-            horizontal: 'center',
-        },
-    });
 
     /**
      * Report select change event handler
@@ -67,13 +59,13 @@ export default function Lend({ requestData }: any) {
             setCurrentReport(newReport);
         } catch (error: any) {
             if (error.message) {
-                setSnackbarContent({
-                    ...snackbarContent,
-                    errorMessage: error.message,
-                    severity: error.cause ? 'warning' : 'error',
-                });
+                dispatch(
+                    snackbarActions.open({
+                        message: error.message,
+                        severity: error.cause ? 'warning' : 'error',
+                    })
+                );
             }
-            setOpenSnackbar(true);
         }
         setDisableGenerateReport(false);
         dispatch(reportProgressActions.absoluteValue(0));
@@ -97,13 +89,6 @@ export default function Lend({ requestData }: any) {
         downloadReport(currentReport.pdf, currentReport.name);
     };
 
-    /**
-     * Snack bar reset handler
-     */
-    const resetSnackbar = async () => {
-        setOpenSnackbar(false);
-    };
-
     return (
         <Fragment>
             <Grid>
@@ -113,7 +98,7 @@ export default function Lend({ requestData }: any) {
                         <Tooltip
                             title={
                                 disableGenerateReport
-                                    ? 'Please wait while the report is generating'
+                                    ? data.text.waitForReport
                                     : ''
                             }
                         >
@@ -184,11 +169,7 @@ export default function Lend({ requestData }: any) {
                     </Stack>
                 </Grid>
             </Grid>
-            <SnackBar
-                openSnackbar={openSnackbar}
-                handleSnackbar={resetSnackbar}
-                snackbarContent={snackbarContent}
-            ></SnackBar>
+            <SnackBarNotification></SnackBarNotification>
         </Fragment>
     );
 }

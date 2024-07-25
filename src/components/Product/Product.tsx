@@ -15,20 +15,23 @@ import {
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { useDispatch } from 'react-redux';
 
 import {
     CurlCommand,
     DataTable,
     ExternalIcon,
     JsonViewer,
-    SnackBar,
+    SnackBarNotification,
 } from '../../components';
+import { snackbarActions } from '../../store/slices/snackbar';
 
 import './Product.css';
 import data from './data';
 import { proccessSendRequest } from './helper';
 
 export default function Product({ product, requestData, body }: any) {
+    const dispatch = useDispatch();
     const [currentProduct, setCurrentProduct] = useState<any>(
         data.products.find((item) => item.identifier.toLowerCase() === product)
     );
@@ -53,15 +56,6 @@ export default function Product({ product, requestData, body }: any) {
         requestData.accountData[0]
     );
     const [showRequest, setShowRequest] = useState<boolean>(false);
-    const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [snackbarContent, setSnackbarContent] = useState<any>({
-        errorMessage: 'Something went wrong',
-        severity: 'error',
-        position: {
-            vertical: 'bottom',
-            horizontal: 'center',
-        },
-    });
 
     /**
      * Report change event handler
@@ -123,13 +117,13 @@ export default function Product({ product, requestData, body }: any) {
             setDisplayDataType('table');
         } catch (error: any) {
             if (error.message) {
-                setSnackbarContent({
-                    ...snackbarContent,
-                    errorMessage: error.message,
-                    severity: error.cause ? 'warning' : 'error',
-                });
+                dispatch(
+                    snackbarActions.open({
+                        message: error.message,
+                        severity: error.cause ? 'warning' : 'error',
+                    })
+                );
             }
-            setOpenSnackbar(true);
         }
         setLoading(false);
         setDisableRequest(false);
@@ -145,13 +139,6 @@ export default function Product({ product, requestData, body }: any) {
         dataType: string
     ) => {
         setDisplayDataType(dataType || displayDataType);
-    };
-
-    /**
-     * Reset sanckbar handler
-     */
-    const resetSnackbar = async () => {
-        setOpenSnackbar(false);
     };
 
     return (
@@ -314,11 +301,7 @@ export default function Product({ product, requestData, body }: any) {
                 )}
             </Grid>
             <Grid item xs={12} className='!mt-10'></Grid>
-            <SnackBar
-                openSnackbar={openSnackbar}
-                handleSnackbar={resetSnackbar}
-                snackbarContent={snackbarContent}
-            ></SnackBar>
+            <SnackBarNotification></SnackBarNotification>
         </Fragment>
     );
 }
