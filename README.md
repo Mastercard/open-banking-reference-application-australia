@@ -138,9 +138,8 @@ To proceed further, select **Next**.
 
 ![create customer page](docs/create-customer.png)
 
-or
 
-If you have configured `REACT_APP_AUTO_CREATE_CUSTOMER` to true then the customer will be created automatically.
+If the `REACT_APP_AUTO_CREATE_CUSTOMER` is ser to `true` then the customer will be created automatically.
 
 ![create customer automatic page](docs/create-customer-auto.png)
 
