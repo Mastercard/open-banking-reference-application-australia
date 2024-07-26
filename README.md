@@ -194,11 +194,11 @@ The use cases section provides you with an overview of the different solutions o
 -   **Pay**
      - Provide a seamless payment experience for your customers.
 
-![pay](docs/pay.png)
+![pay](docs/pay_money_transfer_details.png)
 
-![pay2](docs/pay-2.png)
+![pay2](docs/pay_available_balance.png)
 
-![pay3](docs/pay-3.png)
+![pay3](docs/pay_money_transfer_details.png)
 
 ## Hosting Reference App
 
