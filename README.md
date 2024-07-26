@@ -182,17 +182,17 @@ At this point having customer ID and consent receipt ID allows you to retrieve t
 The use cases section provides you with an overview of the different solutions offered by Mastercard Open Banking.
 
 -   **Lend**
-        Make confident lending decisions and offer a hassle-free lending experience for your customers with the help of **Reports**.
+     - Make confident lending decisions and offer a hassle-free lending experience for your customers with the help of **Reports**.
 
 ![lend](docs/lend.png)
 
 -   **Manage**
-        Provide a consolidated view of your customers’ finances in a single space to help your customers manage their wealth better.
+     - Provide a consolidated view of your customers’ finances in a single space to help your customers manage their wealth better.
 
 ![manage](docs/manage.png)
 
 -   **Pay**
-        Provide a seamless payment experience for your customers.
+     - Provide a seamless payment experience for your customers.
 
 ![pay](docs/pay.png)
 
