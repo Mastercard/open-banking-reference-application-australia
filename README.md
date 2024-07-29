@@ -198,7 +198,7 @@ The use cases section provides you with an overview of the different solutions o
 
 ![pay2](docs/pay_available_balance.png)
 
-![pay3](docs/pay_money_transfer_details.png)
+![pay3](docs/pay_account_owner_details.png)
 
 ## Hosting Reference App
 
