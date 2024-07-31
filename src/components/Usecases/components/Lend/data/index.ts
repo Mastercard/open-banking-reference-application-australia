@@ -16,8 +16,8 @@ const requestBody = {
 
 const data = {
     text: {
-        accountError: 'Supported accounts for report generation not added.',
-        waitForReport: 'Please wait while the report is generating.',
+        accountError: 'None of the shared accounts are supported for selected report type.',
+        waitForReport: 'Report generation in progress',
     },
     reports: [
         {

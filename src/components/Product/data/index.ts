@@ -36,7 +36,7 @@ const data = {
             identifier: 'transactions',
             type: 'pay',
             requestType: 'GET',
-            description: 'Get a list of trasactions for given account.',
+            description: 'Get a list of transactions for given account. ',
             api: '/aggregation/v3/customers/<customerId>/accounts/<accountId>/transactions?sort=desc&fromDate=<startDate>&toDate=<endDate>',
             link: 'https://developer.mastercard.com/open-banking-us/documentation/api-reference/?view=api#GetCustomerAccountTransactions',
             columns: [
@@ -64,12 +64,12 @@ const data = {
             type: 'pay',
             requestType: 'GET',
             description:
-                'Get the account number and money transfer details that can be used for, e.g., payment use case. Only Transaction & Savings account types are supported.',
+                'Get the account number and money transfer details that can be used for, e.g., payment initiation. Only Transaction & Savings account types are supported.',
             api: '/aggregation/v3/customers/<customerId>/accounts/<accountId>/details',
             link: 'https://developer.mastercard.com/open-banking-au/documentation/api-reference/?view=api#GetMoneyTransferDetails',
             error: {
                 accountError:
-                    'None of the Added accounts are supported for money transfer detail product',
+                    'None of the shared accounts are supported for Money Transfer Details product.',
             },
             columns: [
                 {
@@ -92,12 +92,12 @@ const data = {
             type: 'pay',
             requestType: 'GET',
             description:
-                'Retrieves the latest cached available & cleared account balances for a customer. Since we update and store balances throughout the day, this is the most accurate balance information available when a connection to a Financial Institution is unavailable or when a faster response is needed.  Only Transaction & Savings and Term Deposit account types are supported.',
+                'Retrieves the latest account balances for a single account in real-time directly from a financial institution. Only Transaction & Savings and Term Deposit account types are supported.',
             api: '/aggregation/v1/customers/<customerId>/accounts/<accountId>/availableBalance/live',
             link: 'https://developer.mastercard.com/open-banking-au/documentation/api-reference/?view=api#GetAvailableBalanceLive',
             error: {
                 accountError:
-                    'None of the  Added accounts are supported for available balance live product',
+                    'None of the shared accounts are supported for Available Balance Live product.',
             },
             columns: [
                 {
@@ -124,13 +124,9 @@ const data = {
             type: 'pay',
             requestType: 'GET',
             description:
-                ' Retrieve account owner details where available from a financial institution',
+                'Retrieve account owner details from a financial institution.',
             api: '/aggregation/v3/customers/<customerId>/accounts/<accountId>/owner',
             link: 'https://developer.mastercard.com/open-banking-au/documentation/api-reference/?view=api#GetAccountOwnergit',
-            error: {
-                accountError:
-                    'None of the  Added accounts are supported for available balance live product',
-            },
             columns: [
                 {
                     accessorKey: 'id',
@@ -154,7 +150,7 @@ const data = {
             api: '/decisioning/v2/customers/<customerId>/voa',
             link: 'https://developer.mastercard.com/open-banking-au/documentation/api-reference/?view=api#GenerateVOAReport',
             description:
-                'The Verification of Assets (VOA) report includes all bank accounts for an individual customer. It retrieves up to twelve months of transaction history for each account type that the customer has permissioned via Connect. Make sure Transaction & Savings or Term Deposit account types are added.',
+                'The Verification of Assets (VOA) report includes all bank accounts for an individual customer. It retrieves up to six months of transaction history for each Transaction & Savings or Term Deposit account that the customer has shared via Connect.',
         },
         {
             name: 'Verification of Income',
@@ -164,7 +160,7 @@ const data = {
             api: '/decisioning/v2/customers/<customerId>/voi',
             link: 'https://developer.mastercard.com/open-banking-au/documentation/api-reference/?view=api#GenerateVOIReport',
             description:
-                'The Verification of Income (VOI) report analyzes both active and inactive income streams, and then ranks them with a confidence score. It retrieves up to 24 months of validated banking data for an individual customer, based on the accounts they have permissioned to access. Make sure Transaction & Savings account types are added.',
+                'The Verification of Income (VOI) report analyses both active and inactive income streams, and then ranks them with a confidence score. It retrieves up to 12 months of validated banking data for an individual customer, based on the Transaction & Savings accounts they have shared via Connect.',
         },
         {
             name: 'Cash Flow Report',
@@ -174,7 +170,7 @@ const data = {
             api: '/decisioning/v2/customers/<customerId>/cashFlowBusiness',
             link: 'https://developer.mastercard.com/open-banking-au/documentation/api-reference/?view=api#GenerateCashFlowBusinessReport',
             description:
-                'The Cash Flow report provides cash flow credit and debit information about a consumer or customer. The availability of consumer report data depends on the financial institution (FI). Some FIs provide only three or four months of transactions while others may provide 12, 18, or 24 months.',
+                'The Cash Flow report provides cash flow credit and debit information about customer\'s accounts. It retrieves up to 12 months of validated banking data for an individual customer, based on all accounts they have shared via Connect.',
         },
     ],
 };

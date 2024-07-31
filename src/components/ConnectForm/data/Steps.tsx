@@ -74,16 +74,16 @@ export const Steps = [
         description: (
             <div>
                 <div className='mt-2'>
-                    Having obtained consent receipt ID, now you can retrive some
-                    of the latest data from the shared accounts. For that, call
-                    the{' '}
+                    Having obtained consent receipt ID, now you can retrieve
+                    some of the latest data from the shared accounts. For that,
+                    call the
                     <span>
                         <a
                             rel='noreferrer'
-                            href='https://developer.mastercard.com/open-banking-au/documentation/api-reference/?view=api#RefreshCustomerAccountsByInstitutionLogin'
+                            href='https://developer.mastercard.com/open-banking-au/documentation/api-reference/#GetCustomerAccounts'
                             target='_blank'
                         >
-                            <b>Refresh Customer Accounts</b>
+                            <b> Get Customer Accounts</b>
                         </a>
                     </span>{' '}
                     endpoint.
@@ -98,10 +98,9 @@ export const Steps = [
         label: 'Use cases',
         description: (
             <div className='mt-2'>
-                The use cases section provides you with an overview of the
-                different solutions offered by Mastercard Open Banking. Find out
-                about the APIs that power these solutions and help our partners
-                succeed.
+                This section provides you with an overview of the different
+                solutions offered by Mastercard Open Banking. Find out about the
+                APIs that power these solutions and help our partners succeed.
             </div>
         ),
         panel: 'panel3',

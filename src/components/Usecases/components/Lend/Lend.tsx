@@ -154,7 +154,7 @@ export default function Lend({ requestData }: any) {
                                 className='generate-report__button '
                                 id={currentReport?.identifier}
                             >
-                                Download json report
+                                Download JSON report
                             </Button>
                         )}
                         {currentReport.pdf && (
@@ -163,7 +163,7 @@ export default function Lend({ requestData }: any) {
                                 className='generate-report__button '
                                 id={currentReport?.identifier}
                             >
-                                Download pdf report
+                                Download PDF report
                             </Button>
                         )}
                     </Stack>
