@@ -22,7 +22,7 @@
     4. [Create your first customer](#4-create-your-first-customer)
     5. [Add a bank account to customer](#5-add-a-bank-account-to-customer)
     6. [Pull account information](#6-pull-account-information)
-    7. [Explore usecases](#7-explore-usecases)
+    7. [Explore usecases](#7-usecases)
 -   [Hosting Reference App](#hosting-reference-app)
 -   [Contact Us](#contact-us)
 
@@ -133,15 +133,12 @@ This will redirect you to the first step of the user flow.
 
 ### 4. Create your first customer
 
-To access any financial data, first you need to create a customer. Provide a unique identifier for the customer.
-To proceed further, select **Next**.
+- To access any financial data, first you need to create a customer.
+   - This can be done either manually or automatically, depending on `REACT_APP_AUTO_CREATE_CUSTOMER` flag value in the `.env` file. 
+If `REACT_APP_AUTO_CREATE_CUSTOMER` is set to `false`, application will prompt you to provide a unique identifier for the customer. To proceed further, select **Next**.
 
 ![create customer page](docs/create-customer.png)
 
-
-To access any financial data, first you need to create a customer. This can be done either manually or automatically, depending on `REACT_APP_AUTO_CREATE_CUSTOMER` flag value in the .env file. 
-If `REACT_APP_AUTO_CREATE_CUSTOMER` is set to `false`, application will prompt you to provide a unique identifier for the customer. To proceed further, select **Next**.
-<screenshot 1>
 
 If the `REACT_APP_AUTO_CREATE_CUSTOMER` is set to `true` then the customer will be created automatically.
 
@@ -173,7 +170,7 @@ the Reference App is now ready to access the consented accounts.
 
 At this point having customer ID and consent receipt ID allows you to retrieve the financial data from consented accounts. The Reference App shows examples of how to retrieve following data elements with the help of Mastercard open banking API's:
 
-1. Account id
+1. Account ID
 2. Account name
 3. Account type
 4. Balance
@@ -181,23 +178,24 @@ At this point having customer ID and consent receipt ID allows you to retrieve t
 
 ![account information page](docs/account-information.png)
 
-### 7. Explore usecases
+### 7. Usecases
 
 The use cases section provides you with an overview of the different solutions offered by Mastercard Open Banking.
 
 -   **Lend**
-     - Make confident lending decisions and offer a hassle-free lending experience for your customers with the help of **Reports**.
+     - Investigate the ways of generating and obtaining the lending reports, including Verification of Assets, Verification of Income and Cash Flow Report. MOBS solution allows you to obtain these reports in     
+       both PDF and JSON format.
 
 ![lend](docs/lend.png)
 
 -   **Manage**
-     - Provide a consolidated view of your customers’ finances in a single space to help your customers manage their wealth better.
+     - Lean how to request the transaction details for a particular account and data it contains.
 
 ![manage](docs/manage.png)
 
 -   **Pay**
-     - Provide a seamless payment experience for your customers.
-
+     - Discover how to obtain the key elements of the customers account required to initiate a payment, such as BSB number and available balance.
+       
 ![pay](docs/pay_money_transfer_details.png)
 
 ![pay2](docs/pay_available_balance.png)
