@@ -139,7 +139,11 @@ To proceed further, select **Next**.
 ![create customer page](docs/create-customer.png)
 
 
-If the `REACT_APP_AUTO_CREATE_CUSTOMER` is ser to `true` then the customer will be created automatically.
+To access any financial data, first you need to create a customer. This can be done either manually or automatically, depending on `REACT_APP_AUTO_CREATE_CUSTOMER` flag value in the .env file. 
+If `REACT_APP_AUTO_CREATE_CUSTOMER` is set to `false`, application will prompt you to provide a unique identifier for the customer. To proceed further, select **Next**.
+<screenshot 1>
+
+If the `REACT_APP_AUTO_CREATE_CUSTOMER` is set to `true` then the customer will be created automatically.
 
 ![create customer automatic page](docs/create-customer-auto.png)
 
