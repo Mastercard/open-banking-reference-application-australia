@@ -1,5 +1,7 @@
 import { Card, CardContent, Typography } from '@mui/material';
-import { TEXTS } from '../../config/config';
+
+import './SandBoxTip.css';
+import data from './data';
 
 export default function SandBoxTip() {
     return (
@@ -10,7 +12,7 @@ export default function SandBoxTip() {
                 </Typography>
 
                 <Typography className='!mb-6 text-gray-700 text-base font-normal leading-5'>
-                    {TEXTS.sandbox.tip}
+                    {data.text.tip}
                 </Typography>
 
                 <div className='flex items-start'>
@@ -25,19 +27,19 @@ export default function SandBoxTip() {
 
                     <div className='flex flex-col items-start gap-4 w-1/3'>
                         <Typography className='mb-2 text-base !font-[700]'>
-                            {TEXTS.sandbox.usernameField}
+                            {data.text.usernameField}
                         </Typography>
                         <Typography className='text-base'>
-                            {TEXTS.sandbox.usernameValue}
+                            {data.text.usernameValue}
                         </Typography>
                     </div>
 
                     <div className='flex flex-col items-start gap-4 w-1/3'>
                         <Typography className='mb-2 text-base !font-[700]'>
-                            {TEXTS.sandbox.passwordField}
+                            {data.text.passwordField}
                         </Typography>
                         <Typography className='text-base'>
-                            {TEXTS.sandbox.passwordValue}
+                            {data.text.passwordValue}
                         </Typography>
                     </div>
                 </div>
