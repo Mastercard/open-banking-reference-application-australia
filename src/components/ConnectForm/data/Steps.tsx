@@ -105,7 +105,7 @@ export const Steps = [
         ),
         panel: 'panel3',
         documentationLink:
-            'https://developer.mastercard.com/open-banking-us/documentation/api-reference/?view=api#GetReportByCustomer',
+            'https://developer.mastercard.com/open-banking-us/documentation/usecases/',
     },
 ];
 

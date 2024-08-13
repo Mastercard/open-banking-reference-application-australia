@@ -55,7 +55,7 @@ export default function Usecases({ requestData }: any) {
             container
             columnSpacing={{ xs: 2, sm: 3, md: 4 }}
         >
-            <Grid item xs={12}>
+            <Grid item xs={12} data-testid={'usecases'}>
                 <Grid item xs={12}>
                     <Tabs
                         variant='scrollable'
@@ -65,6 +65,7 @@ export default function Usecases({ requestData }: any) {
                     >
                         {data.usecases.map((usecase: any, index: number) => (
                             <Tab
+                                data-testid={'tab'}
                                 key={usecase}
                                 label={usecase}
                                 value={usecase}

@@ -133,12 +133,11 @@ This will redirect you to the first step of the user flow.
 
 ### 4. Create your first customer
 
-- To access any financial data, first you need to create a customer.
-   - This can be done either manually or automatically, depending on `REACT_APP_AUTO_CREATE_CUSTOMER` flag value in the `.env` file. 
-If `REACT_APP_AUTO_CREATE_CUSTOMER` is set to `false`, application will prompt you to provide a unique identifier for the customer. To proceed further, select **Next**.
+-   To access any financial data, first you need to create a customer.
+    -   This can be done either manually or automatically, depending on `REACT_APP_AUTO_CREATE_CUSTOMER` flag value in the `.env` file.
+        If `REACT_APP_AUTO_CREATE_CUSTOMER` is set to `false`, application will prompt you to provide a unique identifier for the customer. To proceed further, select **Next**.
 
 ![create customer page](docs/create-customer.png)
-
 
 If the `REACT_APP_AUTO_CREATE_CUSTOMER` is set to `true` then the customer will be created automatically.
 
@@ -183,19 +182,19 @@ At this point having customer ID and consent receipt ID allows you to retrieve t
 The use cases section provides you with an overview of the different solutions offered by Mastercard Open Banking.
 
 -   **Lend**
-     - Investigate the ways of generating and obtaining the lending reports, including Verification of Assets, Verification of Income and Cash Flow Report. MOBS solution allows you to obtain these reports in     
-       both PDF and JSON format.
+    -   Investigate the ways of generating and obtaining the lending reports, including Verification of Assets, Verification of Income and Cash Flow Report. MOBS solution allows you to obtain these reports in  
+        both PDF and JSON format.
 
 ![lend](docs/lend.png)
 
 -   **Manage**
-     - Lean how to request the transaction details for a particular account and data it contains.
+    -   Lean how to request the transaction details for a particular account and data it contains.
 
 ![manage](docs/manage.png)
 
 -   **Pay**
-     - Discover how to obtain the key elements of the customers account required to initiate a payment, such as BSB number and available balance.
-       
+    -   Discover how to obtain the key elements of the customers account required to initiate a payment, such as BSB number and available balance.
+
 ![pay](docs/pay_money_transfer_details.png)
 
 ![pay2](docs/pay_available_balance.png)
@@ -220,7 +219,7 @@ const port = process.env.PORT || 4000;
 
 app.use(express.static('build'));
 app.use(
-    ['/aggregation', '/notifications', '/connect'],
+    ['/aggregation', '/notifications', '/connect', '/decisioning'],
     createProxyMiddleware({
         target: 'https://api.openbanking.mastercard.com.au/',
         changeOrigin: true,

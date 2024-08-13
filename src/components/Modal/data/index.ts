@@ -7,7 +7,7 @@ const data = {
     link: {
         product:
             'https://developer.mastercard.com/open-banking-au/documentation/',
-        github: 'https://github.com/Mastercard/open-banking-reference-application',
+        github: 'https://github.com/Mastercard/open-banking-reference-application-australia/',
     },
 };
 

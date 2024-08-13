@@ -23,6 +23,7 @@ export default function Modal({ handleModalClose }: any) {
 
     return (
         <Dialog
+            data-testid={'modal-component'}
             open={open}
             aria-labelledby='alert-dialog-title'
             aria-describedby='alert-dialog-description'
@@ -76,6 +77,7 @@ export default function Modal({ handleModalClose }: any) {
                             variant='text'
                             onClick={handleClose}
                             className='demo__button flex items-center'
+                            data-testid={'modal-close'}
                         >
                             View demo
                         </Button>

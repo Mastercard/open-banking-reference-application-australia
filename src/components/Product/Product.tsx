@@ -12,10 +12,12 @@ import {
     SelectChangeEvent,
     Divider,
     CircularProgress,
+    Tooltip,
+    ButtonGroup,
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
     CurlCommand,
@@ -25,6 +27,7 @@ import {
     SnackBarNotification,
 } from '../../components';
 import { snackbarActions } from '../../store/slices/snackbar';
+import { accountsRefreshedActions } from '../../store/slices/accounts-refreshed';
 
 import './Product.css';
 import data from './data';
@@ -32,6 +35,9 @@ import { proccessSendRequest } from './helper';
 
 export default function Product({ product, requestData, body }: any) {
     const dispatch = useDispatch();
+    const accountsRefreshed = useSelector(
+        (state: any) => state.accountsRefreshed.refreshed
+    );
     const [currentProduct, setCurrentProduct] = useState<any>(
         data.products.find((item) => item.identifier.toLowerCase() === product)
     );
@@ -61,7 +67,7 @@ export default function Product({ product, requestData, body }: any) {
      * Report change event handler
      * @param event SelectChangeEvent
      */
-    const handleReportChangeSelect = (event: SelectChangeEvent) => {
+    const handleAccountChangeSelect = (event: SelectChangeEvent) => {
         setAccountDisplay(
             requestData.accountDisplayNames.find(
                 (account: any) => event.target.value === account
@@ -106,6 +112,14 @@ export default function Product({ product, requestData, body }: any) {
         setDisableRequest(true);
         requestData.currentAccount = currentAccount;
         try {
+            if (currentProduct.identifier === 'refresh_accounts') {
+                dispatch(
+                    snackbarActions.open({
+                        message: 'Refreshing shared accounts',
+                        severity: 'info',
+                    })
+                );
+            }
             const { tableData, response } = await proccessSendRequest(
                 currentProduct,
                 requestData
@@ -113,13 +127,26 @@ export default function Product({ product, requestData, body }: any) {
             setTableData(tableData);
             setJsonData(response);
             setShowRequest(false);
-            setShowResult(true);
+            if (currentProduct.identifier != 'refresh_accounts') {
+                setShowResult(true);
+            } else {
+                dispatch(
+                    snackbarActions.open({
+                        message: 'Accounts refreshed successfully',
+                        severity: 'success',
+                        timeout: 3000,
+                    })
+                );
+                dispatch(accountsRefreshedActions.refreshed());
+            }
             setDisplayDataType('table');
         } catch (error: any) {
             if (error.message) {
                 dispatch(
                     snackbarActions.open({
-                        message: error.message,
+                        message: error.cause
+                            ? error.message
+                            : 'Something went wrong. Please try again later.',
                         severity: error.cause ? 'warning' : 'error',
                     })
                 );
@@ -146,11 +173,13 @@ export default function Product({ product, requestData, body }: any) {
             <Grid item xs={12} className='!mt-10 '>
                 <Stack direction='row' spacing={2}>
                     <Chip
+                        data-testid='request-type'
                         label={currentProduct.requestType}
                         color='success'
                         className='bg-green-600 text-white !rounded-md !px-2 !pb-0 !text-[10px] !h-[25px]'
                     />
                     <Typography
+                        data-testid='product-name'
                         fontWeight='700'
                         align='center'
                         className='text-gray-700'
@@ -165,22 +194,39 @@ export default function Product({ product, requestData, body }: any) {
                         <ExternalIcon data={'#F37338'} background={'#FFF'} />
                     </a>
                     {currentProduct.type != 'lend' && (
-                        <Button
-                            onClick={handleSendRequest}
-                            className='fetch_button'
-                            disabled={disableRequest}
+                        <Tooltip
+                            title={
+                                currentProduct.identifier === 'transactions' &&
+                                !accountsRefreshed
+                                    ? 'Please refresh shared accounts before fetching transactions'
+                                    : ''
+                            }
                         >
-                            Send request
-                            {loading && (
-                                <CircularProgress
-                                    color='inherit'
-                                    size='1rem'
-                                    sx={{
-                                        marginLeft: '10px',
-                                    }}
-                                />
-                            )}
-                        </Button>
+                            <ButtonGroup className='fetch_button_group'>
+                                <Button
+                                    data-testid={'send-request'}
+                                    onClick={handleSendRequest}
+                                    className='fetch_button'
+                                    disabled={
+                                        disableRequest ||
+                                        (currentProduct.identifier ===
+                                            'transactions' &&
+                                            !accountsRefreshed)
+                                    }
+                                >
+                                    Send request
+                                    {loading && (
+                                        <CircularProgress
+                                            color='inherit'
+                                            size='1rem'
+                                            sx={{
+                                                marginLeft: '10px',
+                                            }}
+                                        />
+                                    )}
+                                </Button>
+                            </ButtonGroup>
+                        </Tooltip>
                     )}
                 </Stack>
             </Grid>
@@ -209,10 +255,11 @@ export default function Product({ product, requestData, body }: any) {
             {['transactions'].includes(product.toLowerCase()) && (
                 <Grid item xs={12} className='mt-2 !ml-20 !mb-4'>
                     <Select
-                        labelId='report-select-label'
-                        id='report-select'
+                        labelId='account-select-label'
+                        id='account-select'
+                        data-testid='account-select'
                         value={accountDisplay}
-                        onChange={handleReportChangeSelect}
+                        onChange={handleAccountChangeSelect}
                         className='w-[320px] h-10'
                     >
                         {requestData.accountDisplayNames.map(
@@ -226,7 +273,10 @@ export default function Product({ product, requestData, body }: any) {
                 </Grid>
             )}
             <Grid className={!showRequest ? 'mt-2 !ml-20 !mb-4' : ''}>
-                <button onClick={handleShowRequest}>
+                <button
+                    data-testid={'button-show-request'}
+                    onClick={handleShowRequest}
+                >
                     {!showRequest && (
                         <span>
                             <KeyboardArrowRightIcon className='arrow' />
@@ -248,7 +298,7 @@ export default function Product({ product, requestData, body }: any) {
                 </button>
             </Grid>
             {showRequest && (
-                <Grid>
+                <Grid data-testid={'curl-command'}>
                     <CurlCommand
                         product={currentProduct}
                         requestData={requestData}
@@ -281,8 +331,15 @@ export default function Product({ product, requestData, body }: any) {
                                 exclusive
                                 onChange={handleDisplayDataTypeChange}
                             >
-                                <ToggleButton value='table'>Table</ToggleButton>
-                                <ToggleButton value='json'>JSON</ToggleButton>
+                                <ToggleButton
+                                    data-testid={'table'}
+                                    value='table'
+                                >
+                                    Table
+                                </ToggleButton>
+                                <ToggleButton data-testid={'json'} value='json'>
+                                    JSON
+                                </ToggleButton>
                             </ToggleButtonGroup>
                         </Stack>
                         {displayDataType === 'json' && (

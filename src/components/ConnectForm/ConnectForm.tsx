@@ -40,21 +40,21 @@ import {
     retrieveConsent,
 } from '../../utils/consent';
 import { snackbarActions } from '../../store/slices/snackbar';
+import { generateAppToken } from '../../utils/helper';
 
 import './ConnectForm.css';
 import {
-    generateAppToken,
     activateCustomer,
     generateConnectUrl,
     createConsumer,
-    refreshAccounts,
+    getAccounts,
 } from './helper';
 import data from './data';
 import Steps from './data/Steps';
 import validationSchema from './FormModel/connectFormValidation';
 import { connectFormModel } from './FormModel/connectFormModel';
 import formInitialValues from './FormModel/connectFormInitialValues';
-import UserNameForm from './Forms/UserNameForm';
+import UserNameForm from './Forms/UserNameForm/UserNameForm';
 
 const { formId, formField } = connectFormModel;
 
@@ -100,17 +100,33 @@ export default function ConnectForm() {
                     partnerId: PARTNERID,
                     partnerSecret: PARTNERSECRET,
                 });
+
                 setAppToken(token);
             }
             if (userName && (token || appToken)) {
-                const subUuid = await subscribeForConsentNotification(
-                    token || appToken
+                dispatch(
+                    snackbarActions.open({
+                        message: 'Creating customer',
+                        severity: 'info',
+                        timeout: 2000,
+                    })
                 );
-                setSubscriptionUuid(subUuid);
                 const userResponse = await activateCustomer(userName, {
                     token: token || appToken,
                 });
+                dispatch(
+                    snackbarActions.open({
+                        message: 'Customer created',
+                        severity: 'success',
+                        timeout: 2000,
+                    })
+                );
                 setUser(userResponse);
+                const subUuid = await subscribeForConsentNotification(
+                    dispatch,
+                    token || appToken
+                );
+                setSubscriptionUuid(subUuid);
             }
             setLoading(false);
             handleNext(false, reset);
@@ -132,8 +148,22 @@ export default function ConnectForm() {
             } else if (activeStep === 1) {
                 await openConnect();
             } else if (activeStep === 2) {
+                dispatch(
+                    snackbarActions.open({
+                        message: 'Creating consumer',
+                        severity: 'info',
+                        timeout: 2000,
+                    })
+                );
                 await createConsumer({ token: appToken, customerId: user?.id });
-                handleNext();
+                dispatch(
+                    snackbarActions.open({
+                        message: 'Consumer created',
+                        severity: 'success',
+                        timeout: 2000,
+                    })
+                );
+                handleNext(false, false);
             } else {
                 handleNext();
             }
@@ -151,7 +181,6 @@ export default function ConnectForm() {
      * @param reset is demo resetted
      */
     const handleNext = (skip = false, reset = false) => {
-        dispatch(snackbarActions.close());
         setLoading(false);
         if (!skip) {
             setActiveStep(reset ? 1 : (prevActiveStep) => prevActiveStep + 1);
@@ -229,7 +258,8 @@ export default function ConnectForm() {
                                     try {
                                         consent = await retrieveConsent(
                                             subscriptionUuid,
-                                            customerId
+                                            customerId,
+                                            dispatch
                                         );
                                     } catch (error) {
                                         handleNext(true);
@@ -239,14 +269,14 @@ export default function ConnectForm() {
                                         return;
                                     }
                                     setConsentReceiptId(consent);
-                                    const accData = await refreshAccounts({
+                                    const accData = await getAccounts({
                                         token: appToken,
                                         customerId: user?.id,
                                         institutionLoginId: institutionLogin,
                                         consentReceiptId: consent,
                                     });
                                     setAccountData(accData.accounts);
-                                    handleNext();
+                                    handleNext(false, false);
                                 }
                                 setDisableSubmit(false);
                             })();
@@ -338,7 +368,6 @@ export default function ConnectForm() {
         }
         return index > activeStep;
     };
-
     /**
      * Exapand or collapse accordion
      * @param panelId panel Id

@@ -49,11 +49,8 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "docker:build": "docker build -t open-banking-au .",
-        "docker:run": "docker run -p \"4000:3000\" open-banking-au start",
-        "docker:stop": "docker stop",
         "test": "react-scripts test",
-        "test:coverage": "react-scripts test --env=jsdom --watchAll=false --coverage",
+        "test:coverage": "react-scripts test --env=jsdom --watchAll=false --coverage --collectCoverageFrom='src/components/**/*.tsx'",
         "eject": "react-scripts eject",
         "lint": "eslint --fix --ext .ts,.tsx ./src",
         "prettier": "npx prettier --write ."

@@ -4,7 +4,7 @@ import Product from '../../../Product/Product';
 
 export default function Pay({ requestData }: any) {
     return (
-        <Grid>
+        <Grid data-testid={'pay'}>
             <Product
                 product={'money_transfer_details'}
                 requestData={requestData}

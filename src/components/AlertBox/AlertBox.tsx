@@ -16,6 +16,7 @@ export default function AlertBox() {
 
     return (
         <Dialog
+            data-testid='alert-box'
             open={openAlert}
             aria-labelledby='alert-dialog-title'
             aria-describedby='alert-dialog-description'
@@ -32,6 +33,7 @@ export default function AlertBox() {
             <DialogContent>
                 <DialogContentText id='alert-dialog-description'>
                     <Alert
+                        data-testid='alert-message'
                         severity='error'
                         sx={{
                             color: '#EB001B',

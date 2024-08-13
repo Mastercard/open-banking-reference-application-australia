@@ -32,7 +32,7 @@ export default function DataTable({ columns, data, product }: any) {
     return (
         <Stack direction='column' spacing={1}>
             <Grid item xs={12} className='!mt-10'>
-                <TableContainer>
+                <TableContainer data-testid={'table'}>
                     <Table>
                         <TableHead>
                             {table.getHeaderGroups().map((headerGroup) => (

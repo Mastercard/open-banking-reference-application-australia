@@ -1,4 +1,4 @@
-import { APP_KEY } from '../config';
+import { APP_KEY, url, PARTNERID, PARTNERSECRET } from '../config';
 
 /**
  * Get request headers for fetch call
@@ -7,7 +7,7 @@ import { APP_KEY } from '../config';
  * @param accept accept type
  * @returns request headers
  */
-export const generateFetchHeaders = (
+export const generateFetchHeaders = async (
     method: string,
     requestData: any = {},
     accept = 'application/json'
@@ -17,6 +17,19 @@ export const generateFetchHeaders = (
     myHeaders.append('Content-Type', 'application/json');
     myHeaders.append('Accept', accept);
     if (requestData?.token) {
+        if (
+            localStorage.getItem('tokenGeneratedAt') &&
+            new Date().getHours() -
+                new Date(
+                    Number(localStorage.getItem('tokenGeneratedAt'))
+                ).getHours() >
+                0
+        ) {
+            requestData.token = await generateAppToken({
+                partnerId: PARTNERID,
+                partnerSecret: PARTNERSECRET,
+            });
+        }
         myHeaders.append('App-Token', requestData.token);
     }
 
@@ -29,6 +42,28 @@ export const generateFetchHeaders = (
         headers: myHeaders,
         mode: 'cors' as RequestMode,
     };
+};
+
+/**
+ * Generate app token
+ * @param requestData application parameters
+ * @returns token (string)
+ */
+export const generateAppToken = async (requestData: any) => {
+    const requestHeaders = await generateFetchHeaders('POST', requestData);
+    const body = JSON.stringify({
+        partnerId: requestData.partnerId,
+        partnerSecret: requestData?.partnerSecret,
+    });
+    const requestOptions = {
+        ...requestHeaders,
+        body,
+    };
+    const { token } = await handleFetchResponse(
+        await fetch(url.generateAppToken, requestOptions)
+    );
+    localStorage.setItem('tokenGeneratedAt', String(new Date().getTime()));
+    return token;
 };
 
 /**

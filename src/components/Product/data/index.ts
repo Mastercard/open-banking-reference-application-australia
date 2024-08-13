@@ -32,6 +32,16 @@ const data = {
             ],
         },
         {
+            name: 'Refresh Accounts',
+            identifier: 'refresh_accounts',
+            type: 'manage',
+            requestType: 'POST',
+            description:
+                'Refresh accounts for given institutionLoginId to fetch the latest transaction data.',
+            api: '/aggregation/v1/customers/<customerId>/institutionLogins/<institutionLoginId>/accounts',
+            link: 'https://developer.mastercard.com/open-banking-au/documentation/api-reference/#RefreshCustomerAccountsByInstitutionLogin',
+        },
+        {
             name: 'Transactions',
             identifier: 'transactions',
             type: 'pay',
@@ -170,7 +180,7 @@ const data = {
             api: '/decisioning/v2/customers/<customerId>/cashFlowBusiness',
             link: 'https://developer.mastercard.com/open-banking-au/documentation/api-reference/?view=api#GenerateCashFlowBusinessReport',
             description:
-                'The Cash Flow report provides cash flow credit and debit information about customer\'s accounts. It retrieves up to 12 months of validated banking data for an individual customer, based on all accounts they have shared via Connect.',
+                "The Cash Flow report provides cash flow credit and debit information about customer's accounts. It retrieves up to 12 months of validated banking data for an individual customer, based on all accounts they have shared via Connect.",
         },
     ],
 };

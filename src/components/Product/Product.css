@@ -15,10 +15,13 @@
     font-weight: bold;
 }
 
-.fetch_button {
-    border-radius: 5px !important;
+.fetch_button_group {
     margin-left: auto !important;
     margin-right: 0 !important;
+}
+
+.fetch_button {
+    border-radius: 5px !important;
     background-color: #2d7763 !important;
     padding: 10px 24px !important;
     color: #fff !important;

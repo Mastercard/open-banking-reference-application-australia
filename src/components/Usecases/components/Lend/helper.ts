@@ -16,6 +16,7 @@ export const submitReport = async (
     requestData: any,
     dispatch: Dispatch
 ) => {
+    dispatch(reportProgressActions.increaseByvalue(5));
     if (!checkForSupportedAccounts(reportData, requestData)) {
         const accountError = new Error(data.text.accountError);
         accountError.cause = 'warning';
@@ -56,7 +57,7 @@ const checkForSupportedAccounts = (reportData: any, requestData: any) => {
  * @returns generate report response
  */
 const generateReport = async (reportData: any, requestData: any) => {
-    const requestHeaders = generateFetchHeaders('POST', requestData);
+    const requestHeaders = await generateFetchHeaders('POST', requestData);
     const requestOptions = { ...requestHeaders, body: reportData.body };
     const result = await fetch(
         reportData.api.replace('<customerId>', requestData.customerId),
@@ -121,7 +122,7 @@ const checkReportStatus = async (
     requestData: any,
     dispatch: Dispatch
 ) => {
-    const requestHeaders = generateFetchHeaders('GET', requestData);
+    const requestHeaders = await generateFetchHeaders('GET', requestData);
     const result = await fetch(
         data.url.getReportStatus.replace(
             '<customerId>',
@@ -144,12 +145,12 @@ const checkReportStatus = async (
  * @returns get report (json and pdf)
  */
 const getReport = async (reportId: string, requestData: any) => {
-    const requestHeadersPDF = generateFetchHeaders(
+    const requestHeadersPDF = await generateFetchHeaders(
         'GET',
         requestData,
         'application/pdf'
     );
-    const requestHeadersJSON = generateFetchHeaders('GET', requestData);
+    const requestHeadersJSON = await generateFetchHeaders('GET', requestData);
 
     const getReports = [
         fetch(

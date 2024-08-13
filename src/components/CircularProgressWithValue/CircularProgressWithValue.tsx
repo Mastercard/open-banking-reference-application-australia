@@ -28,6 +28,7 @@ export default function CircularProgressWithValue(
                     component='div'
                     color='inherit'
                     fontSize={10}
+                    data-testid='progressBar'
                 >{`${Math.round(props.value)}%`}</Typography>
             </Box>
         </Box>

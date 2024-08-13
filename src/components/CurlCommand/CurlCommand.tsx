@@ -33,14 +33,15 @@ export default function CurlCommand({ product, requestData, body }: any) {
                         className='float-right'
                         fontSize='small'
                         onClick={copyToClipBoard}
+                        data-testid={'copyToClipBoard'}
                     ></ContentCopyIcon>
                 </Tooltip>
                 <div className='curl'>
                     <pre>
                         <code>
                             <span>
-                                curl --location --request{' '}
-                                {`${body ? 'POST' : 'GET'}`} \
+                                curl --location --request {product.requestType}{' '}
+                                \
                             </span>
                             <br />
                             <span className='curl-value'>

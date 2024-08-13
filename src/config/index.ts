@@ -7,6 +7,7 @@ export const AUTO_CREATE_CUSTOMER =
 
 /* URL's  */
 export const url = {
+    generateAppToken: '/aggregation/v2/partners/authentication',
     getSubscriptions: '/notifications/webhooks/subscriptions',
     createWebhookEndPoint: '/token',
     updateSubscriptionUrl:

@@ -61,7 +61,9 @@ export default function Lend({ requestData }: any) {
             if (error.message) {
                 dispatch(
                     snackbarActions.open({
-                        message: error.message,
+                        message: error.cause
+                            ? error.message
+                            : 'Something went wrong. Please try again later.',
                         severity: error.cause ? 'warning' : 'error',
                     })
                 );
@@ -91,7 +93,7 @@ export default function Lend({ requestData }: any) {
 
     return (
         <Fragment>
-            <Grid>
+            <Grid data-testid={'lend'}>
                 <Grid item xs={12}>
                     <br />
                     <Stack direction='column' spacing={1}>
@@ -105,6 +107,7 @@ export default function Lend({ requestData }: any) {
                             <Select
                                 labelId='report-select-label'
                                 id='report-select'
+                                data-testid={'report-select'}
                                 value={currentReport?.name}
                                 disabled={disableGenerateReport}
                                 onChange={handleReportChangeSelect}
@@ -131,6 +134,7 @@ export default function Lend({ requestData }: any) {
                     <Stack direction='row' spacing={1}>
                         {!currentReport.json && (
                             <Button
+                                data-testid={'generate-report'}
                                 onClick={generateReport}
                                 className='generate-report__button'
                                 disabled={disableGenerateReport}
@@ -150,8 +154,9 @@ export default function Lend({ requestData }: any) {
                         )}
                         {currentReport.json && (
                             <Button
+                                data-testid={'json-download'}
                                 onClick={downloadJsonReport}
-                                className='generate-report__button '
+                                className='generate-report__button'
                                 id={currentReport?.identifier}
                             >
                                 Download JSON report
@@ -159,8 +164,9 @@ export default function Lend({ requestData }: any) {
                         )}
                         {currentReport.pdf && (
                             <Button
+                                data-testid={'pdf-download'}
                                 onClick={downloadPdfReport}
-                                className='generate-report__button '
+                                className='generate-report__button'
                                 id={currentReport?.identifier}
                             >
                                 Download PDF report

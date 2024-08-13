@@ -7,7 +7,7 @@ const initialState: any = {
     timeout: 5000,
 };
 const snackBarSlice = createSlice({
-    name: 'reportProgress',
+    name: 'snackbarState',
     initialState,
     reducers: {
         open(state: any, action: PayloadAction<any>) {

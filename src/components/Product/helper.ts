@@ -7,10 +7,15 @@ import { generateFetchHeaders, handleFetchCall } from '../../utils/helper';
  * @returns product API response
  */
 export const proccessSendRequest = async (product: any, requestData: any) => {
-    const requestHeaders = generateFetchHeaders('GET', requestData);
+    const requestHeaders = await generateFetchHeaders(
+        product.requestType,
+        requestData
+    );
     switch (product.identifier.toLowerCase()) {
         case 'accounts':
             return getAccountsInformation(product, requestData, requestHeaders);
+        case 'refresh_accounts':
+            return refreshAccounts(product, requestData, requestHeaders);
         case 'transactions':
             return getTransactions(product, requestData, requestHeaders);
         case 'money_transfer_details':
@@ -51,6 +56,20 @@ const getAccountsInformation = async (
     );
     const tableData = getTableData(response.accounts, product.columns);
     return { tableData, response };
+};
+
+/**
+ * Refresh shared accounts
+ * @param product product details
+ * @param requestData application parameters
+ * @param requestHeaders requestHeaders
+ */
+const refreshAccounts = async (
+    product: any,
+    requestData: any,
+    requestHeaders: any
+): Promise<any> => {
+    return handleFetchCall(product.api, requestData, requestHeaders);
 };
 
 /**
@@ -114,25 +133,27 @@ const getMoneyTransferDetails = async (
     requestData: any,
     requestHeaders: any
 ): Promise<any> => {
-    const accounts = requestData.accountData;
+    const accounts = requestData.accountData.filter(
+        (account: any) => account.type === 'transactionAndSavings'
+    );
+    checkForAccountError(product, accounts);
     const tableDataArray = [];
     const jsonArray = [];
+    const processRequest = [];
     for (const account of accounts) {
-        if (account.type === 'transactionAndSavings') {
-            const response = await handleFetchCall(
-                product.api,
-                requestData,
-                requestHeaders,
-                account
-            );
-            const paymentInstruction = {
-                id: account.id,
-                accountNumber: response?.paymentInstruction[0].accountNumber,
-                bsbNumber: response?.paymentInstruction[0].descriptors[0].value,
-            };
-            tableDataArray.push(paymentInstruction);
-            jsonArray.push(response);
-        }
+        processRequest.push(
+            handleFetchCall(product.api, requestData, requestHeaders, account)
+        );
+    }
+    const responses = await Promise.all(processRequest);
+    for (const [index, response] of responses.entries()) {
+        const paymentInstruction = {
+            id: accounts[index].id,
+            accountNumber: response?.paymentInstruction[0].accountNumber,
+            bsbNumber: response?.paymentInstruction[0].descriptors[0].value,
+        };
+        tableDataArray.push(paymentInstruction);
+        jsonArray.push(response);
     }
 
     checkForAccountError(product, jsonArray);
@@ -151,29 +172,31 @@ const getAvailableBalanceLive = async (
     requestData: any,
     requestHeaders: any
 ): Promise<any> => {
-    const accounts = requestData.accountData;
+    const accounts = requestData.accountData.filter(
+        (account: any) =>
+            account.type === 'transactionAndSavings' || account.type === 'cd'
+    );
+    checkForAccountError(product, accounts);
     const tableDataArray = [];
     const jsonArray = [];
+    const processRequest = [];
     for (const account of accounts) {
-        if (account.type === 'transactionAndSavings' || account.type === 'cd') {
-            const response = await handleFetchCall(
-                product.api,
-                requestData,
-                requestHeaders,
-                account
-            );
-            const paymentInstruction = {
-                id: account.id,
-                accountNumber: response.realAccountNumberLast4,
-                availableBalance: response.availableBalance,
-                currency: account.currency,
-            };
-            tableDataArray.push(paymentInstruction);
-            jsonArray.push(response);
-        }
+        processRequest.push(
+            handleFetchCall(product.api, requestData, requestHeaders, account)
+        );
+    }
+    const responses = await Promise.all(processRequest);
+    for (const response of responses) {
+        const paymentInstruction = {
+            id: response.id,
+            accountNumber: response.realAccountNumberLast4,
+            availableBalance: response.availableBalance,
+            currency: response.currency,
+        };
+        tableDataArray.push(paymentInstruction);
+        jsonArray.push(response);
     }
 
-    checkForAccountError(product, jsonArray);
     return { tableData: tableDataArray, response: jsonArray };
 };
 
@@ -192,22 +215,24 @@ const getAccountOwners = async (
     const accounts = requestData.accountData;
     const tableDataArray = [];
     const jsonArray = [];
+    const processRequest = [];
     for (const account of accounts) {
-        const response = await handleFetchCall(
-            product.api,
-            requestData,
-            requestHeaders,
-            account
+        processRequest.push(
+            handleFetchCall(product.api, requestData, requestHeaders, account)
         );
+    }
+    const responses = await Promise.all(processRequest);
+    for (const [index, response] of responses.entries()) {
         const holderDetails = response?.holders[0];
         const paymentInstruction = {
-            id: account.id,
+            id: accounts[index].id,
             name: holderDetails.ownerName,
             address: holderDetails?.addresses[0].ownerAddress,
         };
         tableDataArray.push(paymentInstruction);
         jsonArray.push(response);
     }
+
     return { tableData: tableDataArray, response: jsonArray };
 };
 
@@ -227,8 +252,8 @@ const getTableData = (jsonData: any, columns: any) => {
     });
 };
 
-const checkForAccountError = (product: any, jsonArray: any) => {
-    if (jsonArray.length === 0) {
+const checkForAccountError = (product: any, validAccounts: any) => {
+    if (validAccounts.length === 0) {
         const accountTypeError = new Error();
         accountTypeError.message = product.error.accountError;
         accountTypeError.cause = 'warning';

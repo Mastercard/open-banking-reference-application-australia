@@ -8,7 +8,7 @@ export default function Accounts({ requestData }: any) {
     return (
         <Grid>
             <Stack direction='column' spacing={1}>
-                <Typography variant='subtitle1'>
+                <Typography variant='subtitle1' data-testid='accounts-test'>
                     {data.text.accountList + ' '}
                     <span className='text-gray-700'>
                         {requestData.accountData.length} accounts

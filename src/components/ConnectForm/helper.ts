@@ -3,34 +3,13 @@ import { generateFetchHeaders, handleFetchResponse } from '../../utils/helper';
 import data from './data';
 
 /**
- * Generate app token
- * @param requestData application parameters
- * @returns token (string)
- */
-export const generateAppToken = async (requestData: any) => {
-    const requestHeaders = generateFetchHeaders('POST', requestData);
-    const body = JSON.stringify({
-        partnerId: requestData.partnerId,
-        partnerSecret: requestData?.partnerSecret,
-    });
-    const requestOptions = {
-        ...requestHeaders,
-        body,
-    };
-    const { token } = await handleFetchResponse(
-        await fetch(data.url.generateAppToken, requestOptions)
-    );
-    return token;
-};
-
-/**
  * Create a new active customer
  * @param userName unique username for customer
  * @param requestData application parameters
  * @returns activate customer response
  */
 export const activateCustomer = async (userName: string, requestData: any) => {
-    const requestHeaders = generateFetchHeaders('POST', requestData);
+    const requestHeaders = await generateFetchHeaders('POST', requestData);
     let body = JSON.parse(data.body.activateCustomer);
     body = JSON.stringify({ ...body, username: userName });
     const requestOptions = {
@@ -48,7 +27,7 @@ export const activateCustomer = async (userName: string, requestData: any) => {
  * @returns connect url
  */
 export const generateConnectUrl = async (requestData: any) => {
-    const requestHeaders = generateFetchHeaders('POST', requestData);
+    const requestHeaders = await generateFetchHeaders('POST', requestData);
     const body = JSON.stringify({
         partnerId: requestData.partnerId,
         customerId: requestData?.customerId,
@@ -69,7 +48,7 @@ export const generateConnectUrl = async (requestData: any) => {
  * @returns create consumer response
  */
 export const createConsumer = async (requestData: any) => {
-    const requestHeaders = generateFetchHeaders('POST', requestData);
+    const requestHeaders = await generateFetchHeaders('POST', requestData);
     const requestOptions = {
         ...requestHeaders,
         body: data.body.createConsumer,
@@ -85,12 +64,12 @@ export const createConsumer = async (requestData: any) => {
 };
 
 /**
- * Refresh active accounts using institutionLoginId
+ * Get shared accounts using instituitonLoginId
  * @param requestData application parameters
  * @returns refresh accounts response
  */
-export const refreshAccounts = async (requestData: any) => {
-    const requestHeaders = generateFetchHeaders('POST', requestData);
+export const getAccounts = async (requestData: any) => {
+    const requestHeaders = await generateFetchHeaders('GET', requestData);
     const result = await fetch(
         data.url.refreshAccounts
             .replace('<customerId>', String(requestData.customerId))
