@@ -6,13 +6,17 @@ import {
     DialogContentText,
     Alert,
 } from '@mui/material';
-import { PARTNERID, PARTNERSECRET, APP_KEY, TEXTS } from '../../config/config';
+
+import { PARTNERID, PARTNERSECRET, APP_KEY } from '../../config';
+
+import data from './data';
 
 export default function AlertBox() {
     const [openAlert] = useState(!(PARTNERID && PARTNERSECRET && APP_KEY));
 
     return (
         <Dialog
+            data-testid='alert-box'
             open={openAlert}
             aria-labelledby='alert-dialog-title'
             aria-describedby='alert-dialog-description'
@@ -24,17 +28,18 @@ export default function AlertBox() {
                     color: '#EB001B',
                 }}
             >
-                {TEXTS.alertBox.invalidConfiguration}
+                {data.text.invalidConfiguration}
             </DialogTitle>
             <DialogContent>
                 <DialogContentText id='alert-dialog-description'>
                     <Alert
+                        data-testid='alert-message'
                         severity='error'
                         sx={{
                             color: '#EB001B',
                         }}
                     >
-                        <div>{TEXTS.alertBox.invalidKeys}</div>
+                        <div>{data.text.invalidKeys}</div>
                     </Alert>
                 </DialogContentText>
             </DialogContent>
