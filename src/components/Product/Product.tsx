@@ -202,7 +202,14 @@ export default function Product({ product, requestData, body }: any) {
                                     : ''
                             }
                         >
-                            <ButtonGroup className='fetch_button_group'>
+                            <ButtonGroup
+                                className={`fetch_button_group  ${
+                                    currentProduct.identifier ===
+                                        'transactions' && !accountsRefreshed
+                                        ? 'disable_fetch_button'
+                                        : ''
+                                }`}
+                            >
                                 <Button
                                     data-testid={'send-request'}
                                     onClick={handleSendRequest}

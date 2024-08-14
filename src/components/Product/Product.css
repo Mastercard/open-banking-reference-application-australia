@@ -31,3 +31,8 @@
     text-transform: none !important;
     font-family: 'MarkForMC-Medium', sans-serif !important;
 }
+
+.disable_fetch_button {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
