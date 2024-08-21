@@ -36,10 +36,10 @@ export default function SandBoxTip() {
 
                     <div className='flex flex-col items-start gap-4 w-1/3'>
                         <Typography className='mb-2 text-base !font-[700]'>
-                            {data.text.passwordField}
+                            Banking Password
                         </Typography>
                         <Typography className='text-base'>
-                            {data.text.passwordValue}
+                            profile_4100
                         </Typography>
                     </div>
                 </div>

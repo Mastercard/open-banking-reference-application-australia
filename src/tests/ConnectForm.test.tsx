@@ -84,7 +84,7 @@ describe('Testing ConnectForm Component', () => {
         );
 
         await user.click(screen.getByRole('button', { name: /View demo/i }));
-        const element = await screen.findByText(/AUTO COMPLETE/i);
+        const element = await screen.findByText(/AUTO CREATION COMPLETE/i);
         expect(element).toBeInTheDocument();
         const connectElement = await screen.findByText('Connect Bank Account');
         expect(connectElement).toBeInTheDocument();
