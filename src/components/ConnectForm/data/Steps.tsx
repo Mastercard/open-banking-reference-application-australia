@@ -76,7 +76,7 @@ export const Steps = [
                 <div className='mt-2'>
                     Having obtained consent receipt ID, now you can retrieve
                     some of the latest data from the shared accounts. For that,
-                    call the
+                    call the{' '}
                     <span>
                         <a
                             rel='noreferrer'
