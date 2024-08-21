@@ -296,7 +296,7 @@ export default function ConnectForm() {
                 }
             }
         } catch (error: any) {
-            console.error(error?.message);
+            console.log(error?.message);
             throw error;
         }
     };
@@ -645,7 +645,7 @@ export default function ConnectForm() {
                                                                 {accord.id ===
                                                                     'panel0' &&
                                                                 AUTO_CREATE_CUSTOMER
-                                                                    ? 'AUTO COMPLETE'
+                                                                    ? 'AUTO CREATION COMPLETE'
                                                                     : 'COMPLETE'}
                                                             </Typography>
                                                         )
