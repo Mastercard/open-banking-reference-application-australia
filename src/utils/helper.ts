@@ -13,7 +13,7 @@ export const generateFetchHeaders = async (
     accept = 'application/json'
 ) => {
     const myHeaders = new Headers();
-    myHeaders.append('App-Key', APP_KEY);
+    myHeaders.append('App-Key', APP_KEY ?? '');
     myHeaders.append('Content-Type', 'application/json');
     myHeaders.append('Accept', accept);
     if (requestData?.token) {

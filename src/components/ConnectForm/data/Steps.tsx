@@ -105,7 +105,7 @@ export const Steps = [
         ),
         panel: 'panel3',
         documentationLink:
-            'https://developer.mastercard.com/open-banking-us/documentation/usecases/',
+            'https://developer.mastercard.com/open-banking-au/documentation/usecases/',
     },
 ];
 

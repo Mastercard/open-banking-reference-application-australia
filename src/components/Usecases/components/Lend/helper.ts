@@ -190,31 +190,3 @@ export const downloadReport = (report: any, filename: string, isPdf = true) => {
     alink.download = `${filename}.${isPdf ? 'pdf' : 'json'}`;
     alink.click();
 };
-
-/**
- * Download PDF report
- * @param report generated report
- * @param filename filename
- */
-export const downloadPDf = (report: any, filename: string) => {
-    const fileURL = window.URL.createObjectURL(report);
-    const alink = document.createElement('a');
-    alink.target = '_blank';
-    alink.href = fileURL;
-    alink.download = `${filename}.json`;
-    alink.click();
-};
-
-/**
- * Download json report
- * @param report generated report
- */
-export const downloadJson = (report: any) => {
-    const x: any = window.open();
-    x.document.open();
-    x.document.write(
-        '<html><body><pre>' +
-            JSON.stringify(report, null, 2) +
-            '</pre></body></html>'
-    );
-};
