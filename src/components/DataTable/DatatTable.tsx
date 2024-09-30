@@ -47,10 +47,7 @@ export default function DataTable({ columns, data, product }: any) {
                                             variant='head'
                                             key={header.id}
                                         >
-                                            {header.isPlaceholder
-                                                ? null
-                                                : header.column.columnDef
-                                                      .header}
+                                            {header.column.columnDef.header}
                                         </TableCell>
                                     ))}
                                 </TableRow>
@@ -68,14 +65,11 @@ export default function DataTable({ columns, data, product }: any) {
                                             variant='body'
                                             key={cell.id}
                                         >
-                                            {/* Use MRT's cell renderer that provides better logic than flexRender */}
-                                            {cell ? (
-                                                <MRT_TableBodyCellValue
-                                                    cell={cell}
-                                                    table={table}
-                                                    staticRowIndex={rowIndex} //just for batch row selection to work
-                                                />
-                                            ) : null}
+                                            <MRT_TableBodyCellValue
+                                                cell={cell}
+                                                table={table}
+                                                staticRowIndex={rowIndex} //just for batch row selection to work
+                                            />
                                         </TableCell>
                                     ))}
                                 </TableRow>
