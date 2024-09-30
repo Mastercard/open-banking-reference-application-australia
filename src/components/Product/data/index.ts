@@ -48,7 +48,7 @@ const data = {
             requestType: 'GET',
             description: 'Get a list of transactions for given account. ',
             api: '/aggregation/v3/customers/<customerId>/accounts/<accountId>/transactions?sort=desc&fromDate=<startDate>&toDate=<endDate>',
-            link: 'https://developer.mastercard.com/open-banking-us/documentation/api-reference/?view=api#GetCustomerAccountTransactions',
+            link: 'https://developer.mastercard.com/open-banking-au/documentation/api-reference/?view=api#GetCustomerAccountTransactions',
             columns: [
                 {
                     accessorKey: 'date',

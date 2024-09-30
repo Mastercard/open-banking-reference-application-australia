@@ -13,31 +13,41 @@ import { generateFetchHeaders } from './helper';
  */
 export const subscribeForConsentNotification = async (
     dispatch: Dispatch,
-    token = ''
+    token: string
 ): Promise<string> => {
-    const activeSubscription = await getActiveSubsriptions(token, dispatch);
-    if (activeSubscription) {
-        const subscriptionUuid = getSubscriptionUuid(activeSubscription);
-        return getValidSubscriptionUuid(
-            activeSubscription,
-            subscriptionUuid,
-            dispatch,
-            token
+    try {
+        const activeSubscription = await getActiveSubscriptions(
+            token,
+            dispatch
         );
-    }
-    dispatch(
-        snackbarActions.open({
-            message: 'Subscribing for consent notification',
-            severity: 'info',
-            timeout: 2000,
-        })
-    );
-    const webHookEndpoint = await createWebhookEndPoint();
-    if (webHookEndpoint) {
-        await subscribeForConsent(token, webHookEndpoint);
-        return webHookEndpoint;
-    } else {
-        throw new Error('Failed to create webhook endpoint');
+        if (activeSubscription) {
+            const subscriptionUuid = getSubscriptionUuid(activeSubscription);
+            return getValidSubscriptionUuid(
+                activeSubscription,
+                subscriptionUuid,
+                dispatch,
+                token
+            );
+        }
+        dispatch(
+            snackbarActions.open({
+                message: 'Subscribing for consent notification',
+                severity: 'info',
+                timeout: 2000,
+            })
+        );
+        const webHookEndpoint = await createWebhookEndPoint();
+        if (webHookEndpoint) {
+            await subscribeForConsent(token, webHookEndpoint);
+            return webHookEndpoint;
+        } else {
+            throw new Error('Failed to create webhook endpoint');
+        }
+    } catch (error: any) {
+        if (error.cause === 'source') {
+            throw error;
+        }
+        throw new Error('Failed to subscribe for consent notification');
     }
 };
 
@@ -53,7 +63,7 @@ const getValidSubscriptionUuid = async (
     subscription: any,
     subscriptionUuid: string,
     dispatch: Dispatch,
-    token = ''
+    token: string
 ): Promise<string> => {
     const result = await fetchWebhookToken(subscriptionUuid);
     if ((!result?.success && result?.error) || result.total > 99) {
@@ -77,7 +87,10 @@ const getValidSubscriptionUuid = async (
  * @param token App token for request authorization
  * @returns return updated subscriptionUuid
  */
-const updateSubscriptionUuid = async (subscriptionId: string, token = '') => {
+const updateSubscriptionUuid = async (
+    subscriptionId: string,
+    token: string
+) => {
     const webHookEndpoint = await createWebhookEndPoint();
     const requestHeaders = await generateFetchHeaders('PUT', { token });
     const body = JSON.stringify({
@@ -153,7 +166,7 @@ const fetchWebhookToken = async (subscriptionUuid: string): Promise<any> => {
  * @param dispatch Dispatch event for redux store
  * @returns active subscription
  */
-const getActiveSubsriptions = async (
+const getActiveSubscriptions = async (
     token: string,
     dispatch: Dispatch
 ): Promise<string> => {
@@ -176,7 +189,9 @@ const getActiveSubsriptions = async (
         }
         return activeSubscription;
     } catch (error) {
-        throw new Error('Failed to get active Subscriptions');
+        throw new Error('Failed to get active Subscriptions', {
+            cause: 'source',
+        });
     }
 };
 
@@ -186,11 +201,7 @@ const getActiveSubsriptions = async (
  * @returns subscription uuid
  */
 const getSubscriptionUuid = (subscription: any): string => {
-    try {
-        return subscription?.url?.split('/')?.reverse()?.[0];
-    } catch (error) {
-        throw new Error('Failed to get Subscription Uuid');
-    }
+    return subscription?.url?.split('/')?.reverse()?.[0];
 };
 
 /**
@@ -198,18 +209,14 @@ const getSubscriptionUuid = (subscription: any): string => {
  * @returns subscription uuid
  */
 const createWebhookEndPoint = async (): Promise<string> => {
-    try {
-        const headers = new Headers();
-        headers.append('Accept', 'application/json');
-        const response = await fetch(url.createWebhookEndPoint, {
-            headers,
-            method: 'POST',
-        });
-        const result = await response.json();
-        return result?.uuid;
-    } catch (error) {
-        throw new Error('Failed to create webhook endpoint');
-    }
+    const headers = new Headers();
+    headers.append('Accept', 'application/json');
+    const response = await fetch(url.createWebhookEndPoint, {
+        headers,
+        method: 'POST',
+    });
+    const result = await response.json();
+    return result?.uuid;
 };
 
 /**
@@ -221,14 +228,10 @@ const subscribeForConsent = async (
     token: string,
     webHookEndpoint: string
 ): Promise<void> => {
-    try {
-        const requestHeaders = await generateFetchHeaders('POST', { token });
-        const body = JSON.stringify({
-            url: `https://webhook.site/${webHookEndpoint}`,
-            notificationType: 'CONSENT',
-        });
-        await fetch(url.getSubscriptions, { ...requestHeaders, body });
-    } catch (error) {
-        throw new Error('Failed to subscribe for consent notification');
-    }
+    const requestHeaders = await generateFetchHeaders('POST', { token });
+    const body = JSON.stringify({
+        url: `https://webhook.site/${webHookEndpoint}`,
+        notificationType: 'CONSENT',
+    });
+    await fetch(url.getSubscriptions, { ...requestHeaders, body });
 };

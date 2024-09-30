@@ -19,7 +19,7 @@
 -   [Demo](#demo)
     1. [Generate your credentials](#1-generate-your-credentials)
     2. [Add credentials to the .env file](#2-add-credentials-to-the-env-file)
-    3. [Run application](#3-run-application)
+    3. [Setup and run the application](#3-setup-and-run-the-application)
     4. [Create your first customer](#4-create-your-first-customer)
     5. [Add a bank account to customer](#5-add-a-bank-account-to-customer)
     6. [Pull account information](#6-pull-account-information)
@@ -109,14 +109,19 @@ The Open Banking Reference App needs Sandbox API credentials adding to the `.env
 ### 3. Setup and Run the application
 
 -   ##### Run without docker
+
     The following command will install the required depdendancies on your machine. (This command should be executed during the initial setup)
+
     ```
     npm i
     ```
+
     Execute the following command to start the Reference App:
+
     ```shell
     npm start
     ```
+
 -   ##### Run with docker
 
     **Pre-requisites** - Docker installed and running on your machine: https://docs.docker.com/get-docker/
@@ -126,6 +131,10 @@ The Open Banking Reference App needs Sandbox API credentials adding to the `.env
     ```
     docker compose up
     ```
+
+    Launch the web browser and navigate to http://localhost:4000 to view the application.
+
+    **Note:** To update the docker image for the reference application, execute the command `docker compose build`, followed by `docker compose up` to run application.
 
 When the application is launched in a browser, it prompts either to proceed with demo or go to GitHub. Select **View Demo**.
 This will redirect you to the first step of the user flow.
